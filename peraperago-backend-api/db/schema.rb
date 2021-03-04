@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_045432) do
   create_table "cards", force: :cascade do |t|
     t.string "a_side"
     t.string "b_side"
+    t.boolean "new"
     t.bigint "user_id", null: false
     t.bigint "deck_id", null: false
     t.datetime "created_at", precision: 6, null: false
