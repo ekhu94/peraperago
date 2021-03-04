@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  a_side: MyString
+  b_side: MyString
+  user: one
+  deck: one
+
+two:
+  a_side: MyString
+  b_side: MyString
+  user: two
+  deck: two
