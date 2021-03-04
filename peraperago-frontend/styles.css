@@ -12,19 +12,25 @@
     padding: 0;
 }
 
-html {
+/* html {
     height: 100vh;
-}
+} */
 
 body {
     font-family:'Noto Sans JP', sans-serif;
     background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
     width: 100%;
-    max-height: 100vh;
+    height: 100%;
+    min-height: 100vh;
+    /* max-height: 100%; */
 }
 
+/* main#container {
+    max-height: 100vh;
+} */
+
 .card-main {
-    margin: 10% auto 4%;
+    margin: 10% auto 0;
     width: 35em;
     height: 20em;
     perspective: 800px;
@@ -81,11 +87,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* margin-top: 4rem; */
 }
 
 .buttons button {
-    margin: 0 6em;
+    margin: 2em 6em;
 }
 
 .hidden {
@@ -99,8 +104,16 @@ body {
 
 @media (max-width: 768px) {
 
+    body {
+        font-family:'Noto Sans JP', sans-serif;
+        background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
+        width: 100%;
+        min-height: 100vh;
+        /* max-height: 100%; */
+    }
+
     .card-main {
-        margin: 25% auto 4%;
+        margin: 15% auto 4%;
         width: 20em;
         height: 30em;
     }
@@ -110,10 +123,10 @@ body {
     }
 }
 
-@media (max-width: 400px) {
+/* @media (max-width: 400px) {
 
     .card-main {
-        margin: 45% auto 4%;
+        margin: 40% auto 4%;
         width: 20em;
         height: 30em;
         font-size: 0.8rem;
@@ -122,7 +135,7 @@ body {
     .buttons button {
     margin: 0 2em;
     }
-}
+} */
 
 /* @media (max-width: 320px) {
 
