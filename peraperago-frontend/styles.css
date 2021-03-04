@@ -12,16 +12,17 @@
     padding: 0;
 }
 
-/* html {
-    height: 100vh;
-} */
+html {
+    min-height: 100vh;
+}
 
 body {
     font-family:'Noto Sans JP', sans-serif;
     background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     min-height: 100vh;
+    /* max-height: 100vh; */
     /* max-height: 100%; */
 }
 
@@ -105,10 +106,8 @@ body {
 @media (max-width: 768px) {
 
     body {
-        font-family:'Noto Sans JP', sans-serif;
-        background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
-        width: 100%;
-        min-height: 100vh;
+        /* min-height: 100vh;
+        max-height: 100vh; */
         /* max-height: 100%; */
     }
 
@@ -119,33 +118,20 @@ body {
     }
 
     .buttons button {
-    margin: 0 2em;
+    margin: 2em 2em;
     }
 }
 
-/* @media (max-width: 400px) {
+@media (max-width: 380px) {
 
     .card-main {
-        margin: 40% auto 4%;
-        width: 20em;
-        height: 30em;
-        font-size: 0.8rem;
+        margin: 30% auto 4%;
+        width: 15rem;
+        height: 25rem;
+        /* font-size: 0.5rem; */
     }
 
     .buttons button {
-    margin: 0 2em;
+    margin: 4em 2em;
     }
-} */
-
-/* @media (max-width: 320px) {
-
-    .card-main {
-        margin: 45% auto 4%;
-        width: 10em;
-        height: 15em;
-    }
-
-    .buttons button {
-    margin: 0 2em;
-    }
-} */
+}
