@@ -10,23 +10,38 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300&display=swap" rel="stylesheet">
     <!-- 日本語 -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" type = "text/css" href="styles.css">
 </head>
 <body>
-
-    <div class="card">
-        <div class="card-inner">
-            <div class="card-face card-face-front">
-                <p>to scold, to tell off / to question persistently</p>
-            </div>
-            <div class="card-face card-face-back">
-                <p class="japanese">（を）なじる（なじります）</p>
-                <div><button>Correct</button></div>
+    <main id="container">
+        <div class="card-main">
+            <div class="card-inner">
+                <div class="card-face card-face-front">
+                    <div class="card-content">
+                        <p>to scold, to tell off / to question persistently</p>
+                    </div>
+                </div>
+                <div class="card-face card-face-back">
+                    <div class="card-content">
+                        <p class="japanese">（を）なじる（なじります）</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="buttons">
+            <button class="btn btn-success">Correct</button>
+            <button class="btn btn-danger">Try Again</button>
+        </div>
+    </main>
 
+    <!-- Javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="src/app.js"></script>
 </body>

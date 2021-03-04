@@ -19,12 +19,10 @@ ActiveRecord::Schema.define(version: 2021_03_04_045432) do
     t.string "a_side"
     t.string "b_side"
     t.boolean "new"
-    t.bigint "user_id", null: false
     t.bigint "deck_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["deck_id"], name: "index_cards_on_deck_id"
-    t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
   create_table "decks", force: :cascade do |t|
@@ -33,12 +31,5 @@ ActiveRecord::Schema.define(version: 2021_03_04_045432) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string "username"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   add_foreign_key "cards", "decks"
-  add_foreign_key "cards", "users"
 end

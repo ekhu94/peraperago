@@ -12,17 +12,21 @@
     padding: 0;
 }
 
+html {
+    height: 100vh;
+}
+
 body {
     font-family:'Noto Sans JP', sans-serif;
     background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
     width: 100%;
-    min-height: 100vh;
+    max-height: 100vh;
 }
 
-.card {
-    margin: 50px auto 0;
-    width: 20em;
-    height: 30em;
+.card-main {
+    margin: 10% auto 4%;
+    width: 35em;
+    height: 20em;
     perspective: 800px;
 }
 
@@ -32,7 +36,7 @@ body {
     transition: transform 1s;
     transform-style: preserve-3d;
     cursor: pointer;
-    position: relative;
+    /* position: relative; */
 }
 
 .card-inner.is-flipped {
@@ -73,10 +77,62 @@ body {
     text-align: center;
 }
 
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-top: 4rem; */
+}
+
+.buttons button {
+    margin: 0 6em;
+}
+
 .hidden {
     display: none;
 }
 
 .japanese {
     font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 300;
 }
+
+@media (max-width: 768px) {
+
+    .card-main {
+        margin: 25% auto 4%;
+        width: 20em;
+        height: 30em;
+    }
+
+    .buttons button {
+    margin: 0 2em;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .card-main {
+        margin: 45% auto 4%;
+        width: 20em;
+        height: 30em;
+        font-size: 0.8rem;
+    }
+
+    .buttons button {
+    margin: 0 2em;
+    }
+}
+
+/* @media (max-width: 320px) {
+
+    .card-main {
+        margin: 45% auto 4%;
+        width: 10em;
+        height: 15em;
+    }
+
+    .buttons button {
+    margin: 0 2em;
+    }
+} */
