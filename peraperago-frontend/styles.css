@@ -43,6 +43,7 @@ main#container {
     transform: translateY(0.25em);
     transition: all 0.6s;
     font-weight: 400;
+    opacity: 0.8;
     background-color: #03407898;
     color: var(--light);
 }
