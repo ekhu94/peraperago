@@ -48,7 +48,7 @@ const startDeck = async deck => {
     }
 }
 
-const nextCard = async (card) => {
+const nextCard = async card => {
     card.new = false;
     await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
     const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
@@ -56,6 +56,17 @@ const nextCard = async (card) => {
     const next = deck.data.cards.find(c => c.new === true);
     if (next) {
         createFlashcard(next);
+    } else {
+        getDecks();
+    }
+}
+
+const repeatCard = async () => {
+    const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
+    shuffleDeck(deck.data);
+    const card = deck.data.cards.find(c => c.new === true);
+    if (card) {
+        createFlashcard(card);
     } else {
         getDecks();
     }
@@ -148,6 +159,9 @@ const createFlashcard = async card => {
 
     //! move on to next card
     correctBtn.addEventListener('click', () => nextCard(card));
+
+    //! repeat card by reshuffling
+    wrongBtn.addEventListener('click', () => repeatCard());
 
     contentA.appendChild(pA);
     contentB.appendChild(pB);

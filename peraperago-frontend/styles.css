@@ -39,9 +39,10 @@ main#container {
 }
 
 .card:hover {
-    transform: scale(1.1, 1.1);
-    transition: all 0.3s;
+    transform: scale(1.05, 1.05);
+    transition: all 0.4s;
     font-weight: 400;
+    opacity: 0.8;
     background-color: #03407898;
     color: var(--light);
 }
