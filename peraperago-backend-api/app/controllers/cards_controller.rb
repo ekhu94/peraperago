@@ -10,4 +10,16 @@ class CardsController < ApplicationController
         render json: card
     end
 
+    def update
+        card = Card.find_by(id: params[:id])
+        card.update(card_params)
+        render json: card
+    end
+
+    private
+
+    def card_params
+        params.require(:card).permit(:a_side, :b_side, :new, :deck_id)
+    end
+
 end

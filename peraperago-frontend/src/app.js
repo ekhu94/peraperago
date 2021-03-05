@@ -35,19 +35,21 @@ const startDeck = async deck => {
     cardContainer.classList.remove('hidden');
     deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
-    createFlashcard(res.data.cards[0], 0);
+    const first = res.data.cards.find(c => c.new === true);
+    if (first) {
+        createFlashcard(first);
+    } else {
+        getDecks();
+    }
 }
 
-const nextCard = async (card, idx) => {
+const nextCard = async (card) => {
     card.new = false;
-    const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
-    if (idx < res.data.cards.length) {
-        // res.data.cards[idx - 1].new = false;
-        // const deck = shuffleDeck(res.data.cards);
-        // while (!deck[idx].new) {
-        //     idx++;
-        // }
-        createFlashcard(res.data.cards[idx], idx);
+    const res = await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
+    const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
+    const next = deck.data.cards.find(c => c.new === true);
+    if (next) {
+        createFlashcard(next);
     } else {
         getDecks();
     }
@@ -80,7 +82,7 @@ const createDeckCard = deck => {
     h5.classList.add('card-subtitle', 'mb-2');
     h5.innerText.innerText = "";
     p.classList.add('card-text');
-    p.innerText = `${deck.cards.length} cards ready to study`;
+    p.innerText = `${deck.cards.filter(c => c.new === true).length} cards ready to study`;
 
     //! add eventlistener for mouse-over to show "study" text
     card.addEventListener('mouseenter', () => {
@@ -100,9 +102,11 @@ const createDeckCard = deck => {
     return card;
 }
 
-const createFlashcard = async (card, idx) => {
+const createFlashcard = async card => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
+
+    cardId = card.id;
 
     const cardMain = document.createElement('div');
     const cardInner = document.createElement('div');
@@ -139,7 +143,7 @@ const createFlashcard = async (card, idx) => {
     })
 
     //! move on to next card
-    correctBtn.addEventListener('click', () => nextCard(card, idx + 1));
+    correctBtn.addEventListener('click', () => nextCard(card));
 
     contentA.appendChild(pA);
     contentB.appendChild(pB);
