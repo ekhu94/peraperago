@@ -39,8 +39,8 @@ main#container {
 }
 
 .card:hover {
-    transform: scale(1.05, 1.05);
-    transition: all 0.4s;
+    transform: translateY(0.25em);
+    transition: all 0.8s;
     font-weight: 400;
     opacity: 0.8;
     background-color: #03407898;
@@ -107,8 +107,13 @@ main#container {
     justify-content: center;
 }
 
+.counter {
+    color: #fff;
+    font-size: 1.3rem;
+}
+
 .buttons button {
-    margin: 2em 6em;
+    margin: 0 6em 2em;
 }
 
 .hidden {
@@ -123,11 +128,18 @@ main#container {
 h1#header {
     text-align: center;
     color: #fff;
-    font-size: 4rem;
+    font-size: 3.5rem;
     letter-spacing: 1.8rem;
-    margin-top: 2rem;
+    margin-top: 1rem;
     font-family: 'M PLUS Rounded 1c', sans-serif;
     font-weight: 400;
+    cursor: pointer;
+}
+
+h1#header:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: var(--primary) 3px 5px 2px;
+    transition: all 0.4s;
 }
 
 @media (max-width: 768px) {

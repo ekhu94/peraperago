@@ -6,6 +6,8 @@ let deckId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
+
+    header.addEventListener('click', () => getDecks());
 });
 
 const shuffleDeck = deck => {
@@ -40,9 +42,10 @@ const startDeck = async deck => {
     deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(res.data);
+    let count = deck.cards.filter(c => c.new === true).length;
     const first = res.data.cards.find(c => c.new === true);
     if (first) {
-        createFlashcard(first);
+        createFlashcard(first, count);
     } else {
         getDecks();
     }
@@ -53,9 +56,10 @@ const nextCard = async card => {
     await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
     const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(deck.data);
+    let count = deck.data.cards.filter(c => c.new === true).length;
     const next = deck.data.cards.find(c => c.new === true);
     if (next) {
-        createFlashcard(next);
+        createFlashcard(next, count);
     } else {
         getDecks();
     }
@@ -64,9 +68,10 @@ const nextCard = async card => {
 const repeatCard = async () => {
     const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(deck.data);
+    let count = deck.data.cards.filter(c => c.new === true).length;
     const card = deck.data.cards.find(c => c.new === true);
     if (card) {
-        createFlashcard(card);
+        createFlashcard(card, count);
     } else {
         getDecks();
     }
@@ -84,6 +89,7 @@ const handleDeckRows = decks => {
 }
 
 const createDeckCard = deck => {
+
     const card = document.createElement('div');
     const body = document.createElement('div');
     const h3 = document.createElement('h3');
@@ -99,11 +105,15 @@ const createDeckCard = deck => {
     h5.classList.add('card-subtitle', 'mb-2');
     h5.innerText.innerText = "";
     p.classList.add('card-text');
-    p.innerText = `${deck.cards.filter(c => c.new === true).length} cards ready to study`;
+    p.innerText = `${deck.cards.filter(c => c.new === true).length} cards ready`;
 
     //! add eventlistener for mouse-over to show "study" text
     card.addEventListener('mouseenter', () => {
-        h5.innerText = "Start Studying!";
+        if (deck.cards.filter(c => c.new === true).length === 0) {
+            h5.innerText = "All Done!"
+        } else {
+            h5.innerText = "Start Studying!";
+        }
     })
 
     card.addEventListener('mouseleave', () => {
@@ -119,7 +129,7 @@ const createDeckCard = deck => {
     return card;
 }
 
-const createFlashcard = async card => {
+const createFlashcard = async (card, count) => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
 
@@ -131,6 +141,7 @@ const createFlashcard = async card => {
     const contentB = document.createElement('div');
     const pA = document.createElement('p');
     const pB = document.createElement('p');
+    const counter = document.createElement('p');
 
     const btns = document.createElement('div');
     const correctBtn = document.createElement('button');
@@ -145,6 +156,8 @@ const createFlashcard = async card => {
     contentB.classList.add('card-content');
     pA.innerText = card.a_side;
     pB.innerText = card.b_side;
+    counter.classList.add('text-center', 'mt-3', 'counter');
+    counter.innerText = `Cards Remaining: ${count}`;
 
     btns.classList.add('buttons');
     correctBtn.classList.add('btn', 'btn-outline-success');
@@ -171,7 +184,7 @@ const createFlashcard = async card => {
     btns.append(wrongBtn, correctBtn);
     cardMain.appendChild(cardInner);
 
-    cardContainer.append(cardMain, btns);
+    cardContainer.append(cardMain, counter, btns);
 }
 
 const deleteChildren = el => {
