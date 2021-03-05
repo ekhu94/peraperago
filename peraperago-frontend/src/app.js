@@ -8,7 +8,13 @@ let main = true;
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
 
-    header.addEventListener('click', () => getDecks());
+    header.addEventListener('click', () => {
+        if (main) {
+
+        } else {
+            getDecks();
+        }
+    });
 });
 
 const shuffleDeck = deck => {
@@ -100,7 +106,7 @@ const createDeckCard = deck => {
     const p = document.createElement('p');
 
     card.id = deck.id;
-    card.classList.add('card', 'text-center', 'py-4', 'col-md-4', 'col-sm-6', 'col-8');
+    card.classList.add('card', 'text-center', 'py-4', 'col-md-3', 'col-sm-5', 'col-6');
     card.setAttribute('width', '18rem');
     body.classList.add('card-body');
     h3.classList.add('card-title', 'pb-3');

@@ -172,12 +172,20 @@ h1#header:hover {
     transition: all 0.4s;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+
+    .card h3{
+        font-size: 1.2rem;
+    }
+
+    .card h5{
+        font-size: 1rem;
+    }
 
     .card-main {
         margin: 15% auto 4%;
-        width: 18em;
-        height: 28em;
+        width: 20em;
+        height: 30em;
     }
 
     .buttons button.btn {
