@@ -1,5 +1,8 @@
 const innerCard = document.querySelector('.card-inner');
+const header = document.querySelector('h1#header');
 
-innerCard.addEventListener('click', () => {
-    innerCard.classList.toggle('is-flipped');
-})
+document.addEventListener('DOMContentLoaded', () => {
+    innerCard.addEventListener('click', () => {
+        innerCard.classList.toggle('is-flipped');
+    })
+});

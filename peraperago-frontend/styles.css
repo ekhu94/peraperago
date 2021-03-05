@@ -26,12 +26,19 @@ body {
     /* max-height: 100%; */
 }
 
-/* main#container {
-    max-height: 100vh;
-} */
+main#container {
+    
+}
+
+.card {
+    /* padding-top: 10px; */
+    margin: 4rem 2rem;
+    line-height: 1.2rem;
+    cursor: pointer;
+}
 
 .card-main {
-    margin: 10% auto 0;
+    margin: 5rem auto 0;
     width: 35em;
     height: 20em;
     perspective: 800px;
@@ -43,7 +50,6 @@ body {
     transition: transform 1s;
     transform-style: preserve-3d;
     cursor: pointer;
-    /* position: relative; */
 }
 
 .card-inner.is-flipped {
@@ -80,7 +86,8 @@ body {
 }
 
 .card-inner p {
-    font-size: 1.2em;
+    font-size: 1.6rem;
+    padding: 1.2rem;
     text-align: center;
 }
 
@@ -103,6 +110,16 @@ body {
     font-weight: 300;
 }
 
+h1#header {
+    text-align: center;
+    color: #fff;
+    font-size: 4rem;
+    letter-spacing: 1.5rem;
+    margin-top: 2rem;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 400;
+}
+
 @media (max-width: 768px) {
 
     body {
@@ -118,11 +135,16 @@ body {
     }
 
     .buttons button {
-    margin: 2em 2em;
+    margin: 2rem 2rem;
+    }
+
+    h1#header {
+        font-size: 2.5rem;
+        letter-spacing: 1rem;
     }
 }
 
-@media (max-width: 380px) {
+@media (max-width: 420px) {
 
     .card-main {
         margin: 30% auto 4%;
@@ -132,6 +154,11 @@ body {
     }
 
     .buttons button {
-    margin: 4em 2em;
+    margin: 3.5rem 2rem;
+    }
+
+    h1#header {
+        font-size: 1.8rem;
+        letter-spacing: 0.7rem;
     }
 }
