@@ -1,6 +1,6 @@
 // const innerCard = document.querySelector('.card-inner');
 const header = document.querySelector('h1#header');
-const form = document.querySelector('form#new-card-form');
+const formContainer = document.querySelector('#form-container');
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
 let deckId = null;
@@ -11,11 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     header.addEventListener('click', () => {
         if (main) {
-
+            formContainer.classList.toggle('hidden');
         } else {
             getDecks();
         }
     });
+
+    
 });
 
 const shuffleDeck = deck => {
@@ -44,16 +46,21 @@ const getDecks = async () => {
     deckId = null;
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
+    deleteChildren(formContainer);
+    formContainer.classList.add('hidden');
     deckContainer.classList.remove('hidden');
     cardContainer.classList.add('hidden');
     const res = await axios.get('http://localhost:3000/decks');
     handleReset(res.data);
+    generateForm(res.data);
     handleDeckRows(res.data);
 }
 
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
+    deleteChildren(formContainer);
+    formContainer.classList.add('hidden');
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
 
@@ -234,3 +241,131 @@ const deleteChildren = el => {
         el.firstChild.remove();
     }
 }
+
+const generateForm = decks => {
+
+    //! Create form elements
+
+    const form = document.createElement('form');
+
+    const rowA = document.createElement('div');
+    const rowB = document.createElement('div');
+    const rowData = document.createElement('div');
+    const rowSubmit = document.createElement('div');
+
+    const colA = document.createElement('div');
+    const colB = document.createElement('div');
+    const colData = document.createElement('div');
+    const subBtn = document.createElement('button');
+
+    const aLabel = document.createElement('label');
+    const aInput = document.createElement('input');
+
+    const bLabel = document.createElement('label');
+    const bInput = document.createElement('input');
+
+    const dataLabel = document.createElement('label');
+    const dataInput = document.createElement('input');
+    const datalist = document.createElement('datalist');
+
+    //! Add classes and attrs to elements
+
+    form.id = "new-card-form";
+
+    rowA.classList.add('row', 'justify-content-center');
+    rowB.classList.add('row', 'justify-content-center');
+    rowData.classList.add('row', 'justify-content-center');
+    rowSubmit.classList.add('row', 'justify-content-center');
+
+    colA.classList.add('mb-1', 'col-8', 'col-md-5');
+    colB.classList.add('mb-1', 'col-8', 'col-md-5');
+    colData.classList.add('mb-1', 'col-8', 'col-md-5');
+    subBtn.setAttribute('type', 'submit');
+    subBtn.classList.add('mt-4', 'btn', 'btn-outline-info', 'col-3');
+    subBtn.innerText = "Create Card";
+
+    aLabel.setAttribute('for', 'a-side');
+    aLabel.classList.add('form-label');
+    aLabel.innerText = "Front Side";
+    bLabel.setAttribute('for', 'b-side');
+    bLabel.classList.add('form-label');
+    bLabel.innerText = "Back Side";
+
+    aInput.setAttribute('type', 'text');
+    aInput.setAttribute('aria-describedby', 'frontHelp');
+    aInput.id = "a-side";
+    aInput.classList.add('form-control');
+    bInput.setAttribute('type', 'text');
+    bInput.setAttribute('aria-describedby', 'backHelp');
+    bInput.id = "b-side";
+    bInput.classList.add('form-control');
+
+    dataLabel.setAttribute('for', 'deckId');
+    dataLabel.classList.add('form-label');
+    dataLabel.innerText = "Add To Deck";
+
+    dataInput.setAttribute('list', 'decks');
+    dataInput.setAttribute('name', 'deckId');
+    dataInput.id = "deckId";
+    dataInput.classList.add('form-control');
+
+    datalist.id = "decks";
+
+    //! Populate datalist with deck options
+    for (let deck of decks) {
+        const opt = createDataOption(deck);
+        datalist.appendChild(opt);
+    }
+
+    //! Append all elements to form
+
+    colA.append(aLabel, aInput);
+    colB.append(bLabel, bInput);
+    colData.append(dataLabel, dataInput, datalist);
+
+    rowA.appendChild(colA);
+    rowB.appendChild(colB);
+    rowData.appendChild(colData);
+    rowSubmit.appendChild(subBtn);
+
+    form.append(rowA, rowB, rowData, rowSubmit);
+    formContainer.appendChild(form);
+}
+
+const createDataOption = deck => {
+    const opt = document.createElement('option');
+    opt.setAttribute('value', deck.title);
+    return opt;
+}
+
+{/* <form id="new-card-form">
+    <div class="row justify-content-center">
+        <div class="mb-1 col-8 col-md-5">
+            <label for="a-side" class="form-label">Front Side</label>
+            <input type="text" class="form-control" id="a-side" aria-describedby="frontHelp">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="mb-1 col-8 col-md-5">
+            <label for="b-side" class="form-label">Back Side</label>
+            <input type="text" class="form-control" id="b-side" aria-describedby="backHelp">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="mb-1 col-8 col-md-5">
+            <label for="deckId" class="form-label">Add To Deck</label>
+            <input list="decks" id="deckId" name="deckId" class="form-control" />
+
+            <datalist id="decks">
+                <option value="Chocolate">
+                <option value="Coconut">
+                <option value="Mint">
+                <option value="Strawberry">
+                <option value="Vanilla">
+            </datalist>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <button type="submit" class="mt-4 btn btn-outline-info col-3">Create Card</button>
+    </div>
+</form> */}
