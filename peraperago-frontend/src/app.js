@@ -3,6 +3,7 @@ const header = document.querySelector('h1#header');
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
 let deckId = null;
+let main = true;
 
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
@@ -24,6 +25,7 @@ const handleShuffle = async deck => {
 }
 
 const getDecks = async () => {
+    main = true;
     deckId = null;
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
@@ -39,6 +41,7 @@ const startDeck = async deck => {
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
 
+    main = false;
     deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(res.data);
