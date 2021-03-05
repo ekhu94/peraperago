@@ -362,6 +362,9 @@ const handlePost = async e => {
             };
             const postRes = await axios.post('http://localhost:3000/decks', newDeck);
             deck = postRes.data;
+            const card = createDeckCard(deck);
+            const row = deckContainer.lastChild;
+            row.appendChild(card);
         }
         const card1 = handleCard(aSide, bSide, deck);
         const card2 = handleCard(bSide, aSide, deck);
@@ -372,11 +375,20 @@ const handlePost = async e => {
         const deckCard = document.getElementById(getRes.data.id);
         const p = deckCard.querySelector('p.card-text');
         p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
-        // getDecks();
-        // formContainer.classList.remove('hidden');
     }
 
 }
+
+// const handleDeckRows = decks => {
+//     //! Create the row div and add in classes
+//     const row = document.createElement('div');
+//     row.classList.add('row', 'justify-content-center');
+//     for (let deck of decks) {
+//         const newDeck = createDeckCard(deck);
+//         row.appendChild(newDeck);
+//     }
+//     deckContainer.appendChild(row);
+// }
 
 const handleCard = (a, b, deck) => {
     return {
