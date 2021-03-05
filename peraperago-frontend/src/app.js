@@ -1,5 +1,6 @@
 // const innerCard = document.querySelector('.card-inner');
 const header = document.querySelector('h1#header');
+const form = document.querySelector('form#new-card-form');
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
 let deckId = null;
@@ -31,6 +32,7 @@ const handleReset = async decks => {
         for (let card of deck.cards) {
             if (card.study_date !== null && calcTimeDiff(card.study_date)) {
                 card.new = true;
+                card.study_date = null;
                 await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
             }
         }
@@ -92,6 +94,7 @@ const calcTimeDiff = start => {
 
 const nextCard = async card => {
     card.new = false;
+    card.study_date = new Date();
     await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
     const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(deck.data);

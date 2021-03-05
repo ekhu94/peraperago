@@ -12,14 +12,14 @@ class CardsController < ApplicationController
 
     def update
         card = Card.find_by(id: params[:id])
-        card.update(new: params[:card][:new], study_date: DateTime.now)
+        card.update(card_params)
         render json: card
     end
 
     private
 
     def card_params
-        params.require(:card).permit(:a_side, :b_side, :new, :deck_id)
+        params.require(:card).permit(:a_side, :b_side, :new, :deck_id, :study_date)
     end
 
 end
