@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    
 });
 
 const shuffleDeck = deck => {
@@ -72,7 +71,7 @@ const startDeck = async deck => {
     deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
     shuffleDeck(res.data);
-    let count = deck.cards.filter(c => c.new === true).length;
+    let count = res.data.cards.filter(c => c.new === true).length;
     const first = res.data.cards.find(c => c.new === true);
     if (first) {
         createFlashcard(first, count);
@@ -369,8 +368,12 @@ const handlePost = async e => {
         await axios.post('http://localhost:3000/cards', card1);
         await axios.post('http://localhost:3000/cards', card2);
         e.target.reset();
-        getDecks();
-        formContainer.classList.remove('hidden');
+        const getRes = await axios.get(`http://localhost:3000/decks/${deck.id}`);
+        const deckCard = document.getElementById(getRes.data.id);
+        const p = deckCard.querySelector('p.card-text');
+        p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+        // getDecks();
+        // formContainer.classList.remove('hidden');
     }
 
 }
