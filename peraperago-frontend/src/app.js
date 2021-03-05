@@ -57,13 +57,7 @@ const getDecks = async () => {
 }
 
 const findDeck = async name => {
-    const res = await axios.get('http://localhost:3000/decks');
-    const deck = res.data.find(d => d.title === name);
-    if (deck) {
-
-    } else {
-        postDeck(name);
-    }
+    
 }
 
 const startDeck = async deck => {
@@ -303,10 +297,12 @@ const generateForm = decks => {
 
     aInput.setAttribute('type', 'text');
     aInput.setAttribute('aria-describedby', 'frontHelp');
+    aInput.setAttribute('name', 'aSide');
     aInput.id = "a-side";
     aInput.classList.add('form-control');
     bInput.setAttribute('type', 'text');
     bInput.setAttribute('aria-describedby', 'backHelp');
+    bInput.setAttribute('name', 'bSide');
     bInput.id = "b-side";
     bInput.classList.add('form-control');
 
@@ -347,11 +343,44 @@ const generateForm = decks => {
 
 const createDataOption = deck => {
     const opt = document.createElement('option');
-    opt.setAttribute('value', deck.title);
+    opt.setAttribute('value', deck.id);
     return opt;
 }
 
-const handlePost = e => {
+const handlePost = async e => {
     e.preventDefault();
-    const deck = findDeck(e.target.deckId.value);
+
+    const aSide = e.target.aSide.value;
+    const bSide = e.target.bSide.value;
+    const deckName = e.target.deckId.value;
+
+    if (aSide !== "" && bSide !== "" && deckName !== "") {
+        const res = await axios.get('http://localhost:3000/decks');
+        let deck = res.data.find(d => d.title === deckName);
+        if (!deck) {
+            newDeck = {
+                title: deckName
+            };
+            const postRes = await axios.post('http://localhost:3000/decks', newDeck);
+            deck = postRes.data;
+        }
+        const card1 = handleCard(aSide, bSide, deck);
+        const card2 = handleCard(bSide, aSide, deck);
+        await axios.post('http://localhost:3000/cards', card1);
+        await axios.post('http://localhost:3000/cards', card2);
+        e.target.reset();
+        getDecks();
+        formContainer.classList.remove('hidden');
+    }
+
+}
+
+const handleCard = (a, b, deck) => {
+    return {
+        a_side: a,
+        b_side: b,
+        new: true,
+        study_date: null,
+        deck_id: deck.id
+    }
 }

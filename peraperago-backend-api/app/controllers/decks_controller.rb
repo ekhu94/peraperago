@@ -10,6 +10,11 @@ class DecksController < ApplicationController
         render json: deck
     end
 
+    def create
+        deck = Deck.create(deck_params)
+        render json: deck
+    end
+
     def update
         deck = Deck.find_by(id: params[:id])
         deck.update(deck_params)
