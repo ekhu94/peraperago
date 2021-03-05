@@ -13,7 +13,7 @@
 }
 
 html {
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
 body {
@@ -131,16 +131,10 @@ h1#header {
 
 @media (max-width: 768px) {
 
-    body {
-        /* min-height: 100vh;
-        max-height: 100vh; */
-        /* max-height: 100%; */
-    }
-
     .card-main {
         margin: 15% auto 4%;
-        width: 20em;
-        height: 30em;
+        width: 18em;
+        height: 28em;
     }
 
     .buttons button {

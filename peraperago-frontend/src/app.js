@@ -147,9 +147,9 @@ const createFlashcard = async (card, idx) => {
     cardBack.appendChild(contentB);
     cardInner.append(cardFront, cardBack);
     btns.append(wrongBtn, correctBtn);
-    cardMain.append(cardInner, btns);
+    cardMain.appendChild(cardInner);
 
-    cardContainer.appendChild(cardMain);
+    cardContainer.append(cardMain, btns);
 }
 
 const deleteChildren = el => {
