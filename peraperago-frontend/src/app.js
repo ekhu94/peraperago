@@ -26,8 +26,15 @@ const shuffleDeck = deck => {
     return deck;
 }
 
-const handleShuffle = async deck => {
-
+const handleReset = async decks => {
+    for (let deck of decks) {
+        for (let card of deck.cards) {
+            if (card.study_date !== null && calcTimeDiff(card.study_date)) {
+                card.new = true;
+                await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
+            }
+        }
+    }
 }
 
 const getDecks = async () => {
@@ -38,6 +45,7 @@ const getDecks = async () => {
     deckContainer.classList.remove('hidden');
     cardContainer.classList.add('hidden');
     const res = await axios.get('http://localhost:3000/decks');
+    handleReset(res.data);
     handleDeckRows(res.data);
 }
 
@@ -57,6 +65,28 @@ const startDeck = async deck => {
         createFlashcard(first, count);
     } else {
         getDecks();
+    }
+}
+
+//! calculate date difference
+const calcTimeDiff = start => {
+    let year = parseInt(start.split('-')[0]);
+    let month = parseInt(start.split('-')[1]);
+    let day = parseInt(start.split('-')[2].split('T')[0]);
+    // let hour = parseInt(start.split('T')[1].split(':')[0]);
+    // let min = parseInt(start.split('T')[1].split(':')[2]);
+    const date = new Date();
+    // console.log(`start year: ${year}, year now: ${date.getFullYear()}`)
+    // console.log(`start month: ${month}, month now: ${date.getMonth() + 1}`)
+    // console.log(`start day: ${day}, day now: ${date.getDate()}`)
+    if (date.getFullYear() > year) {
+        return true;
+    } else if (date.getMonth() + 1 > month) {
+        return true;
+    } else if (date.getDate() > day) {
+        return true;
+    } else {
+        return false;
     }
 }
 
