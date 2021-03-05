@@ -56,6 +56,16 @@ const getDecks = async () => {
     handleDeckRows(res.data);
 }
 
+const findDeck = async name => {
+    const res = await axios.get('http://localhost:3000/decks');
+    const deck = res.data.find(d => d.title === name);
+    if (deck) {
+
+    } else {
+        postDeck(name);
+    }
+}
+
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
@@ -137,6 +147,12 @@ const handleDeckRows = decks => {
     deckContainer.appendChild(row);
 }
 
+const deleteChildren = el => {
+    while (el.firstChild) {
+        el.firstChild.remove();
+    }
+}
+
 const createDeckCard = deck => {
 
     const card = document.createElement('div');
@@ -168,7 +184,7 @@ const createDeckCard = deck => {
     card.addEventListener('mouseleave', () => {
         h5.innerText = "";
     })
-    
+
     //! add event listener for click to start study
     card.addEventListener('click', () => startDeck(deck));
 
@@ -234,12 +250,6 @@ const createFlashcard = async (card, count) => {
     cardMain.appendChild(cardInner);
 
     cardContainer.append(cardMain, counter, btns);
-}
-
-const deleteChildren = el => {
-    while (el.firstChild) {
-        el.firstChild.remove();
-    }
 }
 
 const generateForm = decks => {
@@ -317,6 +327,9 @@ const generateForm = decks => {
         datalist.appendChild(opt);
     }
 
+    //! Add post request to submit
+    form.addEventListener('submit', handlePost);
+
     //! Append all elements to form
 
     colA.append(aLabel, aInput);
@@ -338,34 +351,7 @@ const createDataOption = deck => {
     return opt;
 }
 
-{/* <form id="new-card-form">
-    <div class="row justify-content-center">
-        <div class="mb-1 col-8 col-md-5">
-            <label for="a-side" class="form-label">Front Side</label>
-            <input type="text" class="form-control" id="a-side" aria-describedby="frontHelp">
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="mb-1 col-8 col-md-5">
-            <label for="b-side" class="form-label">Back Side</label>
-            <input type="text" class="form-control" id="b-side" aria-describedby="backHelp">
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="mb-1 col-8 col-md-5">
-            <label for="deckId" class="form-label">Add To Deck</label>
-            <input list="decks" id="deckId" name="deckId" class="form-control" />
-
-            <datalist id="decks">
-                <option value="Chocolate">
-                <option value="Coconut">
-                <option value="Mint">
-                <option value="Strawberry">
-                <option value="Vanilla">
-            </datalist>
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <button type="submit" class="mt-4 btn btn-outline-info col-3">Create Card</button>
-    </div>
-</form> */}
+const handlePost = e => {
+    e.preventDefault();
+    const deck = findDeck(e.target.deckId.value);
+}
