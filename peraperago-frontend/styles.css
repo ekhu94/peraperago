@@ -48,7 +48,7 @@ main#container {
 }
 
 .card-main {
-    margin: 5rem auto 0;
+    margin: 4rem auto 0;
     width: 35em;
     height: 20em;
     perspective: 800px;
@@ -112,8 +112,40 @@ main#container {
     font-size: 1.3rem;
 }
 
-.buttons button {
-    margin: 0 6em 2em;
+.buttons button.btn {
+    font-size: 1.6rem;
+    margin: 0 2em 2em;
+    padding: 1rem 5rem;
+    border-radius: 16px;
+    border: 2px solid;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.buttons button.btn.btn-outline-success {
+    border-color: var(--success);
+    font-weight: 400;
+}
+
+.buttons button.btn.btn-outline-success:hover {
+    background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #3aafb9;
+    text-shadow: 3px 3px 5px #000000;
+    transform: translateY(-0.25em);
+    transition: all 0.3s;
+}
+
+.buttons button.btn.btn-outline-danger {
+    border-color: #dd2d4a;
+    font-weight: 400;
+}
+
+.buttons button.btn.btn-outline-danger:hover {
+    background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #f26a8d;
+    text-shadow: 3px 3px 5px #000000;
+    transform: translateY(-0.25em);
+    transition: all 0.3s;
 }
 
 .hidden {
@@ -137,7 +169,6 @@ h1#header {
 }
 
 h1#header:hover {
-    color: rgb(255, 255, 255);
     text-shadow: var(--primary) 3px 5px 2px;
     transition: all 0.4s;
 }
@@ -150,8 +181,10 @@ h1#header:hover {
         height: 28em;
     }
 
-    .buttons button {
-    margin: 2rem 2rem;
+    .buttons button.btn {
+        font-size: 1.3rem;
+        margin: 0 1.5em 2em;
+        padding: 1rem 4rem;
     }
 
     h1#header {
@@ -169,8 +202,10 @@ h1#header:hover {
         /* font-size: 0.5rem; */
     }
 
-    .buttons button {
-    margin: 3.5rem 2rem;
+    .buttons button.btn {
+        font-size: 0.8rem;
+        margin: 0 1rem 2rem;
+        padding: 1rem 3rem;
     }
 
     h1#header {

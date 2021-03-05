@@ -162,8 +162,8 @@ const createFlashcard = async (card, count) => {
     btns.classList.add('buttons');
     correctBtn.classList.add('btn', 'btn-outline-success');
     wrongBtn.classList.add('btn', 'btn-outline-danger');
-    correctBtn.innerText = "Correct";
-    wrongBtn.innerText = "Wrong";
+    correctBtn.innerText = "GOOD";
+    wrongBtn.innerText = "AGAIN";
 
     //! flip effect
     cardInner.addEventListener('click', () => {

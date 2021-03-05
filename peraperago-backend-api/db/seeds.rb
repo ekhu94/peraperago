@@ -15,6 +15,12 @@ while i < 20
     i += 1
 end
 
+i = 0
+while i < 20
+    Card.create(a_side: b_side_1[i], b_side: a_side_1[i], new: true, deck: d1)
+    i += 1
+end
+
 a_side_2 = ['finish up, complete, get through', 'art exhibition', 'careless person', 'per person, per capita, per head', 'motionlessly / fixedly, intently', 'local specialty, special product (of a region)', 'full price', 'have no recollection, know nothing about', 'separate volume, extra issue', 'personal belongings', 'cause, induce, bring about', '(car parking) market', 'reward, repay / retaliate, get revenge', 'personal identification number, PIN', 'invoiced amount', 'spoiled child, pampered child', 'casual, unconcerned, nonchalant', 'daydream, fantasy', 'take measures, work out a plan', 'irony, sarcasm, cynicism']
 b_side_2 = ['（を）仕上げる', '美術展', '慌て者', '一人当たり', 'じっと', '特産品', '全額', '身に覚えがない', '別冊', '持ち物', '（を）引き起こす', '市場（駐車場〜）', '（に）報いる', '暗証番号', '請求金額', '甘えん坊な', '何気ない', '空想', '（を）講ずる
 ', '皮肉']
@@ -22,6 +28,12 @@ b_side_2 = ['（を）仕上げる', '美術展', '慌て者', '一人当たり'
 j = 0
 while j < 20
     Card.create(a_side: a_side_2[j], b_side: b_side_2[j], new: true, deck: d2)
+    j += 1
+end
+
+j = 0
+while j < 20
+    Card.create(a_side: b_side_2[j], b_side: a_side_2[j], new: true, deck: d2)
     j += 1
 end
 
@@ -34,11 +46,23 @@ while k < 20
     k += 1
 end
 
+k = 0
+while k < 20
+    Card.create(a_side: b_side_3[k], b_side: a_side_3[k], new: true, deck: d3)
+    k += 1
+end
+
 a_side_4 = ['joint liability on guarantee', 'underlying disease, underlying condition', "pining for what one doesn't have, thinking the grass is greener on the other side of the fence", 'show-off', 'hypersensitivity', 'basking in the sun', 'camouflage, disguise / feigning, masquerade', 'unsung hero, person who does a thankless task', 'corpulence, fatness, obesity', 'adapting oneself to the requirements of the moment, playing by ear', 'to put in personal feelings, to harbor feelings', 'to take a step forward / to start on a project, etc.', 'useless resistance, vain struggle', 'devoted, self-sacrificing', 'to recite an incantation, to cast a spell', 'spending the night in a car, train, bus, etc.', 'to acquire a trade, to learn a vocation', 'animal rights, animal welfare, animal protection', 'to tie one on, to get drunk', 'giving a loud pep talk, encouraging (somebody) strongly in a loud voice']
 b_side_4 = ['連帯保証', '基礎疾患', '無い物ねだり', '目立ちたがり', '感覚過敏症', '日向ぼっこ', '偽装', '縁の下の力持ち', '肥満', '臨機応変な', '私情を挟む', '一歩を踏み出す', '悪あがき', '献身的な', '呪文を唱える', '車中泊', '手に職をつける', '動物愛護', '酒気を帯びる', '叱咤激励']
 
 l = 0
 while l < 20
     Card.create(a_side: a_side_4[l], b_side: b_side_4[l], new: true, deck: d4)
+    l += 1
+end
+
+l = 0
+while l < 20
+    Card.create(a_side: b_side_4[l], b_side: a_side_4[l], new: true, deck: d4)
     l += 1
 end
