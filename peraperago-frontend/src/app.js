@@ -2,20 +2,55 @@
 const header = document.querySelector('h1#header');
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
+let deckId = null;
+let cardId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    startDeck(1);
+    getDecks();
 });
 
+const shuffleDeck = async deck => {
+    let count = deck.cards.length;
+    while (count) {
+        deck.cards.push(deck.cards.splice(Math.floor(Math.random() * count), 1)[0]);
+        count -= 1;
+    }
+    return deck;
+}
+
 const getDecks = async () => {
+    deckId = null;
+    deleteChildren(cardContainer);
+    deleteChildren(deckContainer);
+    deckContainer.classList.remove('hidden');
+    cardContainer.classList.add('hidden');
     const res = await axios.get('http://localhost:3000/decks');
     handleDeckRows(res.data);
 }
 
-const startDeck = async deckId => {
+const startDeck = async deck => {
+    deleteChildren(cardContainer);
+    deleteChildren(deckContainer);
+    deckContainer.classList.add('hidden');
+    cardContainer.classList.remove('hidden');
+    deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
-    createFlashcard(res.data.cards[0]);
+    createFlashcard(res.data.cards[0], 0);
+}
+
+const nextCard = async (card, idx) => {
+    card.new = false;
+    const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
+    if (idx < res.data.cards.length) {
+        // res.data.cards[idx - 1].new = false;
+        // const deck = shuffleDeck(res.data.cards);
+        // while (!deck[idx].new) {
+        //     idx++;
+        // }
+        createFlashcard(res.data.cards[idx], idx);
+    } else {
+        getDecks();
+    }
 }
 
 const handleDeckRows = decks => {
@@ -57,6 +92,7 @@ const createDeckCard = deck => {
     })
     
     //! add event listener for click to start study
+    card.addEventListener('click', () => startDeck(deck));
 
     body.append(h3, p, h5);
     card.appendChild(body);
@@ -64,7 +100,10 @@ const createDeckCard = deck => {
     return card;
 }
 
-const createFlashcard = async card => {
+const createFlashcard = async (card, idx) => {
+    deleteChildren(cardContainer);
+    deleteChildren(deckContainer);
+
     const cardMain = document.createElement('div');
     const cardInner = document.createElement('div');
     const cardFront = document.createElement('div');
@@ -99,6 +138,9 @@ const createFlashcard = async card => {
         cardInner.classList.toggle('is-flipped');
     })
 
+    //! move on to next card
+    correctBtn.addEventListener('click', () => nextCard(card, idx + 1));
+
     contentA.appendChild(pA);
     contentB.appendChild(pB);
     cardFront.appendChild(contentA);
@@ -108,6 +150,12 @@ const createFlashcard = async card => {
     cardMain.append(cardInner, btns);
 
     cardContainer.appendChild(cardMain);
+}
+
+const deleteChildren = el => {
+    while (el.firstChild) {
+        el.firstChild.remove();
+    }
 }
 
 /* <div class="card-main">
