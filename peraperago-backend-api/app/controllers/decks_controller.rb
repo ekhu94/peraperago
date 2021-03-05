@@ -10,10 +10,16 @@ class DecksController < ApplicationController
         render json: deck
     end
 
+    def update
+        deck = Deck.find_by(id: params[:id])
+        deck.update(deck_params)
+        render json: deck
+    end
+
     private
 
     def deck_params
-        params.require(:deck).permit(:title)
+        params.require(:deck).permit(:title, cards: [])
     end
 
 end

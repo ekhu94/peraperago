@@ -3,19 +3,22 @@ const header = document.querySelector('h1#header');
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
 let deckId = null;
-let cardId = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
 });
 
-const shuffleDeck = async deck => {
+const shuffleDeck = deck => {
     let count = deck.cards.length;
     while (count) {
         deck.cards.push(deck.cards.splice(Math.floor(Math.random() * count), 1)[0]);
         count -= 1;
     }
     return deck;
+}
+
+const handleShuffle = async deck => {
+
 }
 
 const getDecks = async () => {
@@ -33,8 +36,10 @@ const startDeck = async deck => {
     deleteChildren(deckContainer);
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
+
     deckId = deck.id;
     const res = await axios.get(`http://localhost:3000/decks/${deckId}`);
+    shuffleDeck(res.data);
     const first = res.data.cards.find(c => c.new === true);
     if (first) {
         createFlashcard(first);
@@ -45,8 +50,9 @@ const startDeck = async deck => {
 
 const nextCard = async (card) => {
     card.new = false;
-    const res = await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
+    await axios.patch(`http://localhost:3000/cards/${card.id}`, card);
     const deck = await axios.get(`http://localhost:3000/decks/${deckId}`);
+    shuffleDeck(deck.data);
     const next = deck.data.cards.find(c => c.new === true);
     if (next) {
         createFlashcard(next);
@@ -106,8 +112,6 @@ const createFlashcard = async card => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
 
-    cardId = card.id;
-
     const cardMain = document.createElement('div');
     const cardInner = document.createElement('div');
     const cardFront = document.createElement('div');
@@ -161,22 +165,3 @@ const deleteChildren = el => {
         el.firstChild.remove();
     }
 }
-
-/* <div class="card-main">
-    <div class="card-inner">
-        <div class="card-face card-face-front">
-            <div class="card-content">
-                <p>to scold, to tell off / to question persistently</p>
-            </div>
-        </div>
-        <div class="card-face card-face-back">
-            <div class="card-content">
-                <p class="japanese">（を）なじる（なじります）</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="buttons">
-    <button class="btn btn-outline-success">Correct</button>
-    <button class="btn btn-outline-danger">Try Again</button>
-</div> */
