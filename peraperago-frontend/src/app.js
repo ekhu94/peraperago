@@ -53,7 +53,6 @@ const getDecks = async () => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
     deleteChildren(datalist);
-    // deleteChildren(formContainer);
     deleteChildren(tableContainer);
     formContainer.classList.add('hidden');
     deckContainer.classList.remove('hidden');
@@ -62,7 +61,6 @@ const getDecks = async () => {
     const res = await axios.get(DECKS_URL);
     handleReset(res.data);
     generateOptions(res.data);
-    // generateForm(res.data);
     handleDeckRows(res.data);
 }
 
@@ -263,12 +261,16 @@ const handleForm = async e => {
             const oldRes = await axios.get(`${CARDS_URL}/${cardId}`);
             const oldDeck = oldRes.data.deck;
 
+            const cardB = deck.cards.find(c => c.a_side === findCardA.b_side);
+            // const id2 = deck.cards.find(c => c.b_side === findCardA.data.a_side);
+            // console.log(id2);
+
             await axios.patch(`${CARDS_URL}/${findCardA.id}`, {
                 a_side: aSide,
                 b_side: bSide,
                 deck_id: deck.id,
             });
-            await axios.patch(`${CARDS_URL}/${findCardA.id + 1}`, {
+            await axios.patch(`${CARDS_URL}/${cardB.id}`, {
                 a_side: bSide,
                 b_side: aSide,
                 deck_id: deck.id
