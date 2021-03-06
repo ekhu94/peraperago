@@ -55,10 +55,6 @@ const getDecks = async () => {
     handleDeckRows(res.data);
 }
 
-const findDeck = async name => {
-    
-}
-
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
@@ -342,7 +338,7 @@ const generateForm = decks => {
 
 const createDataOption = deck => {
     const opt = document.createElement('option');
-    opt.setAttribute('value', deck.id);
+    opt.setAttribute('value', deck.title);
     return opt;
 }
 
@@ -378,17 +374,6 @@ const handlePost = async e => {
     }
 
 }
-
-// const handleDeckRows = decks => {
-//     //! Create the row div and add in classes
-//     const row = document.createElement('div');
-//     row.classList.add('row', 'justify-content-center');
-//     for (let deck of decks) {
-//         const newDeck = createDeckCard(deck);
-//         row.appendChild(newDeck);
-//     }
-//     deckContainer.appendChild(row);
-// }
 
 const handleCard = (a, b, deck) => {
     return {
