@@ -39,6 +39,10 @@ main#container {
     box-shadow: 1px 1px 1px 1px var(--dark);
 }
 
+.card .card-subtitle:hover {
+    color: #88e5ff;
+}
+
 .card:hover {
     transform: translateY(0.25em);
     transition: all 0.6s;
