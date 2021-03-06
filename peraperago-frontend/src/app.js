@@ -227,12 +227,24 @@ const handleEdit = async id => {
     const bSide = form.querySelector('input#b-side');
     const deck = form.querySelector('input#deckId');
     const btn = form.querySelector('button');
+    const span = form.querySelector('span');
     
     const res = await axios.get(`${CARDS_URL}/${id}`);
     aSide.value = res.data.a_side;
     bSide.value = res.data.b_side;
     deck.value = res.data.deck.title;
-    btn.innerText = "Update Card";
+    btn.innerText = "Update";
+    span.innerText = " Card";
+    btn.appendChild(span);
+    main = true;
+
+    header.addEventListener('click', () => {
+        cardId = null;
+        form.reset();
+        btn.innerText = "Create";
+        span.innerText = " Card";
+        btn.appendChild(span);
+    })
 }
 
 const handleForm = async e => {
@@ -287,6 +299,8 @@ const handleForm = async e => {
             p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
             oldP.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
             btn.innerText = "Create Card";
+            //! not sure if this is good
+            cardId = null;
         } else {
             const card1 = handleCard(aSide, bSide, deck, false);
             const card2 = handleCard(bSide, aSide, deck, true);
@@ -327,7 +341,7 @@ const createDeckCard = deck => {
     const p = document.createElement('p');
 
     card.id = deck.id;
-    card.classList.add('card', 'text-center', 'py-4', 'col-md-3', 'col-sm-5', 'col-6');
+    card.classList.add('card', 'text-center', 'py-3', 'col-md-3', 'col-sm-5', 'col-6');
     card.setAttribute('width', '18rem');
     body.classList.add('card-body');
     h3.classList.add('card-title', 'pb-3');

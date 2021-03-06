@@ -12,10 +12,6 @@
     padding: 0;
 }
 
-html {
-    /* min-height: 100vh; */
-}
-
 body {
     font-family:'Noto Sans JP', sans-serif;
     background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
@@ -26,13 +22,9 @@ body {
     /* max-height: 100%; */
 }
 
-main#container {
-    
-}
-
 .card {
     /* padding-top: 10px; */
-    margin: 3rem 2rem;
+    margin: 2rem 2rem 3rem;
     line-height: 1.2rem;
     cursor: pointer;
     border-radius: 20px;
@@ -117,28 +109,25 @@ main#container {
     font-size: 1.3rem;
 }
 
-button.btn-outline-info {
+button.btn-outline-light {
+    text-align: center;
     font-size: 0.8rem;
     margin: 0 2em;
-    padding: 0.8rem 4rem;
     border-radius: 20px;
     border: 2px solid;
     color: #fff;
     text-shadow: 2px 2px 4px #000000;
 }
 
-button.btn-outline-info:hover {
+button.btn-outline-light:hover {
     transition: all 0.3s;
     color: var(--light);;
     background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #fff;
     border-color: var(--light);
     font-size: 0.9rem;
     transform: scale(1.03, 1.03);
     text-shadow: 3px 3px 5px #000000;
-}
-
-button.btn-outline-info:focus {
-    outline: none !important;
 }
 
 .buttons button.btn {
@@ -233,6 +222,19 @@ h1#header:hover {
         width: 20em;
         height: 30em;
     }
+
+    span {
+        display: none;
+    }
+
+    /* button.btn-outline-light {
+    font-size: 0.5rem;
+    padding: 0.8rem 6rem;
+}
+
+button.btn-outline-light:hover {
+    font-size: 0.6rem;
+} */
 
     .buttons button.btn {
         font-size: 1.3rem;
