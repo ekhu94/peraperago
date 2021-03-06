@@ -4,8 +4,9 @@ Deck.destroy_all
 d1 = Deck.create(title: "JLPT")
 d2 = Deck.create(title: "みんなの日本語")
 d3 = Deck.create(title: "読書")
-d4 = Deck.create(title: "レッスンの単語")
+d4 = Deck.create(title: "美穂先生")
 d5 = Deck.create(title: "総まとめN1")
+d6 = Deck.create(title: "あおい先生")
 
 a_side_1 = ['synthetic fiber, chemical fiber (abbr)', 'solidarity / joint, collective', 'very small, tiny', "when it's important, when push comes to shove, in one's hour of need", 'gallant, brave, chivalrous, dignified', 'to scold, to tell off / to question persistently', 'distillation', 'e-book, electronic book', '(outward) appearance / appearances, decency, display / lip-service', 'presence, dignity', 'careful, scrupulous, thorough, attentive', 'jurisdiction, control', 'preliminary contest, qualifying round, primary', 'to be common, to be commonplace', 'firmly, solidly, sturdily', 'negligent, neglectful, careless', "to fill (one's heart), to experience a welling up of feelings or sensations", 'command, generalship, leadership', 'person concerned, related party', 'fresh and youthful, lively, vibrant, fresh (e.g. fruit)']
 b_side_1 = ['化繊', '連帯', 'ちっぽけ（な）', 'いざという時（に）', '凛々しい', '（を）なじる（なじります）', '蒸留', '電子書籍', '体裁', '貫禄', '念入りな','管轄', '予選', '（が）ありふれる', 'がっしり（する）', '疎かな', '（が）こみ上げる', '統率', '当事者', 'みずみずしい']
