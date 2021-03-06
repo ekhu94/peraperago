@@ -2,9 +2,11 @@ const DECKS_URL = 'http://localhost:3000/decks';
 const CARDS_URL = 'http://localhost:3000/cards';
 const header = document.querySelector('h1#header');
 const formContainer = document.querySelector('#form-container');
+const tableContainer = document.querySelector('div.table-container')
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
 let deckId = null;
+let cardId = null;
 let main = true;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,13 +49,81 @@ const getDecks = async () => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
     deleteChildren(formContainer);
+    deleteChildren(tableContainer);
     formContainer.classList.add('hidden');
     deckContainer.classList.remove('hidden');
     cardContainer.classList.add('hidden');
+    tableContainer.classList.add('hidden');
     const res = await axios.get(DECKS_URL);
     handleReset(res.data);
     generateForm(res.data);
     handleDeckRows(res.data);
+}
+
+//*TODO
+//! Create table of cards
+const getCards = async deck => {
+    deleteChildren(cardContainer);
+    deleteChildren(deckContainer);
+    deleteChildren(formContainer);
+    deleteChildren(tableContainer);
+    cardContainer.classList.add('hidden');
+    formContainer.classList.add('hidden');
+    deckContainer.classList.add('hidden');
+    tableContainer.classList.remove('hidden');
+    main = false;
+
+    const listDeck = deck.cards.filter((c, i) => i % 2 === 0);
+    
+    const table = document.createElement('table');
+    const tHead = document.createElement('thead');
+    const rowHead = document.createElement('tr');
+    const aSideHead = document.createElement('th');
+    const bSideHead = document.createElement('th');
+    const delHead = document.createElement('th');
+
+    const tBody = document.createElement('tbody');
+
+    table.classList.add('table', 'table-hover');
+    aSideHead.innerText = "Side A";
+    bSideHead.innerText = "Side B";
+    delHead.innerText = "Delete";
+    delHead.classList.add('text-center')
+    aSideHead.setAttribute('scope', 'col');
+    bSideHead.setAttribute('scope', 'col');
+    delHead.setAttribute('scope', 'col');
+
+    for (let card of listDeck) {
+        const tr = createTableRow(card);
+        tBody.appendChild(tr);
+    }
+    rowHead.append(aSideHead, bSideHead, delHead);
+    tHead.appendChild(rowHead);
+    table.append(tHead, tBody);
+    tableContainer.appendChild(table);
+}
+
+const createTableRow = card => {
+    const tr = document.createElement('tr');
+    const aSideTd = document.createElement('td');
+    const bSideTd = document.createElement('td');
+    const delTd = document.createElement('td');
+
+    if (card.a_side.length > 40) {
+        aSideTd.innerText = `${card.a_side.slice(0, 40)}....`;
+    } else {
+        aSideTd.innerText = card.a_side;
+    }
+    if (card.b_side.length > 40) {
+        bSideTd.innerText = `${card.b_side.slice(0, 40)}....`;
+    } else {
+        bSideTd.innerText = card.b_side;
+    }
+    delTd.innerHTML = `<i class="fas fa-minus-circle"></i>`;
+    delTd.classList.add('text-center', 'del-btn');
+
+    tr.append(aSideTd, bSideTd, delTd);
+    return tr;
 }
 
 const startDeck = async deck => {
@@ -137,7 +207,7 @@ const handleDeckRows = decks => {
     deckContainer.appendChild(row);
 }
 
-const handlePost = async e => {
+const handleForm = async e => {
     e.preventDefault();
 
     const aSide = e.target.aSide.value;
@@ -157,17 +227,47 @@ const handlePost = async e => {
             const row = deckContainer.lastChild;
             row.appendChild(card);
         }
-        const card1 = handleCard(aSide, bSide, deck);
-        const card2 = handleCard(bSide, aSide, deck);
-        await axios.post(CARDS_URL, card1);
-        await axios.post(CARDS_URL, card2);
-        e.target.reset();
-        const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
-        const deckCard = document.getElementById(getRes.data.id);
-        const p = deckCard.querySelector('p.card-text');
-        p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+        const findCardA = deck.cards.find(c => c.id === cardId);
+    
+        //! if card exists, update with form vals
+        if (findCardA) {
+            const oldRes = await axios.get(`${CARDS_URL}/${cardId}`);
+            const oldDeck = oldRes.data.deck;
+
+            await axios.patch(`${CARDS_URL}/${findCardA.id}`, {
+                a_side: aSide,
+                b_side: bSide,
+                deck_id: deck.id
+            });
+            await axios.patch(`${CARDS_URL}/${findCardA.id + 1}`, {
+                a_side: bSide,
+                b_side: aSide,
+                deck_id: deck.id
+            });
+
+            e.target.reset();
+            const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
+            const deckCard = document.getElementById(getRes.data.id);
+            const oldDeckCard = document.getElementById(oldDeck.id);
+            const p = deckCard.querySelector('p.card-text');
+            const oldP = oldDeckCard.querySelector('p.card-text');
+            p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+            oldP.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+        } else {
+            const card1 = handleCard(aSide, bSide, deck);
+            const card2 = handleCard(bSide, aSide, deck);
+            await axios.post(CARDS_URL, card1);
+            await axios.post(CARDS_URL, card2);
+            e.target.reset();
+            const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
+            const deckCard = document.getElementById(getRes.data.id);
+            const p = deckCard.querySelector('p.card-text');
+            p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+        }
     }
 }
+
+
 
 const deleteChildren = el => {
     while (el.firstChild) {
@@ -213,7 +313,7 @@ const createDeckCard = deck => {
         if (e.target.id === "start") {
             startDeck(deck);
         } else {
-            console.log(e.target)
+            getCards(deck);
         }
     });
 
@@ -359,7 +459,7 @@ const generateForm = decks => {
     }
 
     //! Add post request to submit
-    form.addEventListener('submit', handlePost);
+    form.addEventListener('submit', handleForm);
 
     //! Append all elements to form
 

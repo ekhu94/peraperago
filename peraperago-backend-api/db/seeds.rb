@@ -13,11 +13,6 @@ b_side_1 = ['化繊', '連帯', 'ちっぽけ（な）', 'いざという時（�
 i = 0
 while i < 20
     Card.create(a_side: a_side_1[i], b_side: b_side_1[i], new: true, deck: d1)
-    i += 1
-end
-
-i = 0
-while i < 20
     Card.create(a_side: b_side_1[i], b_side: a_side_1[i], new: true, deck: d1)
     i += 1
 end
@@ -29,11 +24,6 @@ b_side_2 = ['（を）仕上げる', '美術展', '慌て者', '一人当たり'
 j = 0
 while j < 20
     Card.create(a_side: a_side_2[j], b_side: b_side_2[j], new: true, deck: d2)
-    j += 1
-end
-
-j = 0
-while j < 20
     Card.create(a_side: b_side_2[j], b_side: a_side_2[j], new: true, deck: d2)
     j += 1
 end
@@ -44,11 +34,6 @@ b_side_3 = ['恒例', '闘志', '階層', '時効', '達成', '（を）張り�
 k = 0
 while k < 20
     Card.create(a_side: a_side_3[k], b_side: b_side_3[k], new: true, deck: d3)
-    k += 1
-end
-
-k = 0
-while k < 20
     Card.create(a_side: b_side_3[k], b_side: a_side_3[k], new: true, deck: d3)
     k += 1
 end
@@ -59,11 +44,6 @@ b_side_4 = ['連帯保証', '基礎疾患', '無い物ねだり', '目立ちた�
 l = 0
 while l < 20
     Card.create(a_side: a_side_4[l], b_side: b_side_4[l], new: true, deck: d4)
-    l += 1
-end
-
-l = 0
-while l < 20
     Card.create(a_side: b_side_4[l], b_side: a_side_4[l], new: true, deck: d4)
     l += 1
 end

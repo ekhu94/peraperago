@@ -153,6 +153,19 @@ main#container {
     transition: all 0.3s;
 }
 
+.table.table-hover {
+    cursor: pointer;
+    text-align: left;
+}
+
+td.del-btn {
+    color: #e63947c0;
+}
+
+td.del-btn:hover {
+    color: #e63946;
+}
+
 .hidden {
     display: none;
 }
