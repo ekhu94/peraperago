@@ -21,10 +21,16 @@ class CardsController < ApplicationController
         render json: card
     end
 
+    def destroy
+        card = Card.find_by(id: params[:id])
+        card.destroy
+        render json: card
+    end
+
     private
 
     def card_params
-        params.require(:card).permit(:a_side, :b_side, :new, :deck_id, :study_date)
+        params.require(:card).permit(:a_side, :b_side, :new, :deck_id, :study_date, :japanese)
     end
 
 end

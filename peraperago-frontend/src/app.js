@@ -2,6 +2,8 @@ const DECKS_URL = 'http://localhost:3000/decks';
 const CARDS_URL = 'http://localhost:3000/cards';
 const header = document.querySelector('h1#header');
 const formContainer = document.querySelector('#form-container');
+const form = document.querySelector('form');
+const datalist = document.querySelector('#decks');
 const tableContainer = document.querySelector('div.table-container')
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
@@ -19,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             getDecks();
         }
     });
+
+    form.addEventListener('submit', handleForm);
 
 });
 
@@ -48,6 +52,7 @@ const getDecks = async () => {
     deckId = null;
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
+    deleteChildren(datalist);
     // deleteChildren(formContainer);
     deleteChildren(tableContainer);
     formContainer.classList.add('hidden');
@@ -56,7 +61,8 @@ const getDecks = async () => {
     tableContainer.classList.add('hidden');
     const res = await axios.get(DECKS_URL);
     handleReset(res.data);
-    generateForm(res.data);
+    generateOptions(res.data);
+    // generateForm(res.data);
     handleDeckRows(res.data);
 }
 
@@ -65,7 +71,6 @@ const getDecks = async () => {
 const getCards = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
-    deleteChildren(formContainer);
     deleteChildren(tableContainer);
     cardContainer.classList.add('hidden');
     formContainer.classList.add('hidden');
@@ -73,7 +78,7 @@ const getCards = async deck => {
     tableContainer.classList.remove('hidden');
     main = false;
 
-    const listDeck = deck.cards.filter((c, i) => i % 2 === 0);
+    const listDeck = deck.cards.filter(c => !c.japanese);
     
     const table = document.createElement('table');
     const tHead = document.createElement('thead');
@@ -94,7 +99,7 @@ const getCards = async deck => {
     delHead.setAttribute('scope', 'col');
 
     for (let card of listDeck) {
-        const tr = createTableRow(card);
+        const tr = createTableRow(card, deck);
         tBody.appendChild(tr);
     }
     rowHead.append(aSideHead, bSideHead, delHead);
@@ -103,7 +108,7 @@ const getCards = async deck => {
     tableContainer.appendChild(table);
 }
 
-const createTableRow = card => {
+const createTableRow = (card, deck) => {
     const tr = document.createElement('tr');
     const aSideTd = document.createElement('td');
     const bSideTd = document.createElement('td');
@@ -126,7 +131,7 @@ const createTableRow = card => {
     tr.addEventListener('click', e => {
         cardId = card.id;
         if (e.target.id === "delete") {
-            deleteCard(cardId);
+            deleteCard(cardId, deck);
         } else {
             handleEdit(cardId);
         }
@@ -139,7 +144,6 @@ const createTableRow = card => {
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
-    deleteChildren(formContainer);
     formContainer.classList.add('hidden');
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
@@ -220,14 +224,16 @@ const handleDeckRows = decks => {
 const handleEdit = async id => {
     getDecks();
     formContainer.classList.remove('hidden');
+    const aSide = form.querySelector('input#a-side');
+    const bSide = form.querySelector('input#b-side');
+    const deck = form.querySelector('input#deckId');
+    const btn = form.querySelector('button');
+    
     const res = await axios.get(`${CARDS_URL}/${id}`);
-    console.log(res.data);
-    // const aSide = document.querySelector('input.aSide');
-    // const bSide = formContainer.querySelector('#b-side');
-    // const deck = formContainer.querySelector('#dataId');
-    // console.log(aSide);
-    // console.log(bSide);
-    // console.log(deck);
+    aSide.value = res.data.a_side;
+    bSide.value = res.data.b_side;
+    deck.value = res.data.deck.title;
+    btn.innerText = "Update Card";
 }
 
 const handleForm = async e => {
@@ -260,7 +266,7 @@ const handleForm = async e => {
             await axios.patch(`${CARDS_URL}/${findCardA.id}`, {
                 a_side: aSide,
                 b_side: bSide,
-                deck_id: deck.id
+                deck_id: deck.id,
             });
             await axios.patch(`${CARDS_URL}/${findCardA.id + 1}`, {
                 a_side: bSide,
@@ -269,6 +275,7 @@ const handleForm = async e => {
             });
 
             e.target.reset();
+            const btn = e.target.querySelector('button');
             const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
             const deckCard = document.getElementById(getRes.data.id);
             const oldDeckCard = document.getElementById(oldDeck.id);
@@ -276,9 +283,10 @@ const handleForm = async e => {
             const oldP = oldDeckCard.querySelector('p.card-text');
             p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
             oldP.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
+            btn.innerText = "Create Card";
         } else {
-            const card1 = handleCard(aSide, bSide, deck);
-            const card2 = handleCard(bSide, aSide, deck);
+            const card1 = handleCard(aSide, bSide, deck, false);
+            const card2 = handleCard(bSide, aSide, deck, true);
             await axios.post(CARDS_URL, card1);
             await axios.post(CARDS_URL, card2);
             e.target.reset();
@@ -290,7 +298,14 @@ const handleForm = async e => {
     }
 }
 
-
+const deleteCard = async (id, deck) => {
+    const cardA = await axios.delete(`${CARDS_URL}/${id}`);
+    const id2 = deck.cards.find(c => c.b_side === cardA.data.a_side);
+    if (id2) {
+        const cardB = await axios.delete(`${CARDS_URL}/${id2.id}`);
+    }
+    getDecks();
+}
 
 const deleteChildren = el => {
     while (el.firstChild) {
@@ -499,18 +514,26 @@ const generateForm = decks => {
     formContainer.appendChild(form);
 }
 
+const generateOptions = decks => {
+    for (let deck of decks) {
+        const opt = createDataOption(deck);
+        datalist.appendChild(opt);
+    }
+}
+
 const createDataOption = deck => {
     const opt = document.createElement('option');
     opt.setAttribute('value', deck.title);
     return opt;
 }
 
-const handleCard = (a, b, deck) => {
+const handleCard = (a, b, deck, lang=false) => {
     return {
         a_side: a,
         b_side: b,
         new: true,
         study_date: null,
-        deck_id: deck.id
+        deck_id: deck.id,
+        japanese: lang
     }
 }

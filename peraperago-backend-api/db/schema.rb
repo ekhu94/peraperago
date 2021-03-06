@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_045432) do
     t.string "b_side"
     t.boolean "new"
     t.datetime "study_date"
+    t.boolean "japanese"
     t.bigint "deck_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
