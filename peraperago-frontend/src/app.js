@@ -66,7 +66,7 @@ const getDecks = async () => {
 
 //*TODO
 //! Create table of cards
-const getCards = async deck => {
+const getCards = async id => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
     deleteChildren(tableContainer);
@@ -76,7 +76,8 @@ const getCards = async deck => {
     tableContainer.classList.remove('hidden');
     main = false;
 
-    const listDeck = deck.cards.filter(c => !c.japanese);
+    const deck = await axios.get(`${DECKS_URL}/${id}`);
+    const listDeck = deck.data.cards.filter(c => !c.japanese);
     
     const table = document.createElement('table');
     const tHead = document.createElement('thead');
@@ -301,12 +302,14 @@ const handleForm = async e => {
 }
 
 const deleteCard = async (id, deck) => {
-    const cardA = await axios.delete(`${CARDS_URL}/${id}`);
-    const id2 = deck.cards.find(c => c.b_side === cardA.data.a_side);
-    if (id2) {
-        const cardB = await axios.delete(`${CARDS_URL}/${id2.id}`);
-    }
-    getDecks();
+    if (confirm("Are you sure you want to delete this card and its pair?")) {
+        const cardA = await axios.delete(`${CARDS_URL}/${id}`);
+        const id2 = deck.data.cards.find(c => c.b_side === cardA.data.a_side);
+        if (id2) {
+            const cardB = await axios.delete(`${CARDS_URL}/${id2.id}`);
+        }
+        getDecks();
+    } 
 }
 
 const deleteChildren = el => {
@@ -353,7 +356,7 @@ const createDeckCard = deck => {
         if (e.target.id === "start") {
             startDeck(deck);
         } else {
-            getCards(deck);
+            getCards(deck.id);
         }
     });
 
