@@ -4,9 +4,8 @@ Deck.destroy_all
 d1 = Deck.create(title: "JLPT")
 d2 = Deck.create(title: "みんなの日本語")
 d3 = Deck.create(title: "読書")
-d4 = Deck.create(title: "美穂先生")
+d4 = Deck.create(title: "あおい先生")
 d5 = Deck.create(title: "総まとめN1")
-d6 = Deck.create(title: "あおい先生")
 
 a_side_1 = ['synthetic fiber, chemical fiber (abbr)', 'solidarity / joint, collective', 'very small, tiny', "when it's important, when push comes to shove, in one's hour of need", 'gallant, brave, chivalrous, dignified', 'to scold, to tell off / to question persistently', 'distillation', 'e-book, electronic book', '(outward) appearance / appearances, decency, display / lip-service', 'presence, dignity', 'careful, scrupulous, thorough, attentive', 'jurisdiction, control', 'preliminary contest, qualifying round, primary', 'to be common, to be commonplace', 'firmly, solidly, sturdily', 'negligent, neglectful, careless', "to fill (one's heart), to experience a welling up of feelings or sensations", 'command, generalship, leadership', 'person concerned, related party', 'fresh and youthful, lively, vibrant, fresh (e.g. fruit)']
 b_side_1 = ['化繊', '連帯', 'ちっぽけ（な）', 'いざという時（に）', '凛々しい', '（を）なじる（なじります）', '蒸留', '電子書籍', '体裁', '貫禄', '念入りな','管轄', '予選', '（が）ありふれる', 'がっしり（する）', '疎かな', '（が）こみ上げる', '統率', '当事者', 'みずみずしい']
@@ -47,4 +46,14 @@ while l < 20
     Card.create(a_side: a_side_4[l], b_side: b_side_4[l], new: true, deck: d4, japanese: false)
     Card.create(a_side: b_side_4[l], b_side: a_side_4[l], new: true, deck: d4, japanese: true)
     l += 1
+end
+
+a_side_5 = ['benefits gained in this world through observance of the buddhist teachings', 'strawberry picking', 'dainty, delicate, slender', 'free resources, free materials', 'basic tone, underlying tone', 'radio tower', 'fixed (in place)', 'national security', 'solid body, three-dimensional object', 'black sheep (of a family), ostracism', 'of no use whatsoever, good for nothing, useless', 'unexpected meeting, coincidence', 'firing, discharge of gun', 'suspicious, dubious / indecent, unseemly', 'compromise, cross, blending', 'to demand money, to pester, to extort', 'false accusation, picking a quarrel', 'inheritance tax, death duty', 'appointed day of delivery, time for payment', 'to coax, to win over, to seduce / to roll up and put into (something)']
+b_side_5 = ['現世利益', 'いちご狩り', '華奢', 'フリー素材', '基調', '電波塔', '固定的な', '国家安全保障', '立体', '爪弾き', '何の役にも立たない', '奇遇な', '発砲（する）', '如何わしい', '折衷', '（を）せびる', '言いがかり', '相続税', '納期', '（を）丸め込む']
+
+m = 0
+while m < 20
+    Card.create(a_side: a_side_5[m], b_side: b_side_5[m], new: true, deck: d5, japanese: false)
+    Card.create(a_side: b_side_5[m], b_side: a_side_5[m], new: true, deck: d5, japanese: true)
+    m += 1
 end
