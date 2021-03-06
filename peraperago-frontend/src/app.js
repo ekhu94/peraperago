@@ -48,7 +48,7 @@ const getDecks = async () => {
     deckId = null;
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
-    deleteChildren(formContainer);
+    // deleteChildren(formContainer);
     deleteChildren(tableContainer);
     formContainer.classList.add('hidden');
     deckContainer.classList.remove('hidden');
@@ -109,18 +109,28 @@ const createTableRow = card => {
     const bSideTd = document.createElement('td');
     const delTd = document.createElement('td');
 
-    if (card.a_side.length > 40) {
-        aSideTd.innerText = `${card.a_side.slice(0, 40)}....`;
+    if (card.a_side.length > 60) {
+        aSideTd.innerText = `${card.a_side.slice(0, 60)}....`;
     } else {
         aSideTd.innerText = card.a_side;
     }
-    if (card.b_side.length > 40) {
-        bSideTd.innerText = `${card.b_side.slice(0, 40)}....`;
+    if (card.b_side.length > 60) {
+        bSideTd.innerText = `${card.b_side.slice(0, 60)}....`;
     } else {
         bSideTd.innerText = card.b_side;
     }
-    delTd.innerHTML = `<i class="fas fa-minus-circle"></i>`;
+    tr.id = card.id;
+    delTd.innerHTML = `<i id="delete" class="fas fa-eraser"></i>`;
     delTd.classList.add('text-center', 'del-btn');
+
+    tr.addEventListener('click', e => {
+        cardId = card.id;
+        if (e.target.id === "delete") {
+            deleteCard(cardId);
+        } else {
+            handleEdit(cardId);
+        }
+    })
 
     tr.append(aSideTd, bSideTd, delTd);
     return tr;
@@ -205,6 +215,19 @@ const handleDeckRows = decks => {
         row.appendChild(newDeck);
     }
     deckContainer.appendChild(row);
+}
+
+const handleEdit = async id => {
+    getDecks();
+    formContainer.classList.remove('hidden');
+    const res = await axios.get(`${CARDS_URL}/${id}`);
+    console.log(res.data);
+    // const aSide = document.querySelector('input.aSide');
+    // const bSide = formContainer.querySelector('#b-side');
+    // const deck = formContainer.querySelector('#dataId');
+    // console.log(aSide);
+    // console.log(bSide);
+    // console.log(deck);
 }
 
 const handleForm = async e => {
