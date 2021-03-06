@@ -354,7 +354,7 @@ const createDeckCard = deck => {
 
     //! add eventlistener for mouse-over to show "study" text
     card.addEventListener('mouseenter', () => {
-        if (deck.cards.filter(c => c.new === true).length === 0) {
+        if (!deck.cards.some(c => c.new === true)) {
             h5.innerText = "All Done!"
         } else {
             h5.innerText = "Start Studying!";
