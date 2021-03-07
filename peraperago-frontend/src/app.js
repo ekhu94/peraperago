@@ -58,86 +58,21 @@ const getDecks = async () => {
     deckContainer.classList.remove('hidden');
     cardContainer.classList.add('hidden');
     tableContainer.classList.add('hidden');
+
     const res = await axios.get(DECKS_URL);
-    handleReset(res.data);
-    generateOptions(res.data);
-    handleDeckRows(res.data);
-}
 
-//*TODO
-//! Create table of cards
-const getCards = async id => {
-    deleteChildren(cardContainer);
-    deleteChildren(deckContainer);
-    deleteChildren(tableContainer);
-    cardContainer.classList.add('hidden');
-    formContainer.classList.add('hidden');
-    deckContainer.classList.add('hidden');
-    tableContainer.classList.remove('hidden');
-    main = false;
-
-    const deck = await axios.get(`${DECKS_URL}/${id}`);
-    const listDeck = deck.data.cards.filter(c => !c.japanese);
-    
-    const table = document.createElement('table');
-    const tHead = document.createElement('thead');
-    const rowHead = document.createElement('tr');
-    const aSideHead = document.createElement('th');
-    const bSideHead = document.createElement('th');
-    const delHead = document.createElement('th');
-
-    const tBody = document.createElement('tbody');
-
-    table.classList.add('table', 'table-hover');
-    aSideHead.innerText = "Side A";
-    bSideHead.innerText = "Side B";
-    delHead.innerText = "Delete";
-    delHead.classList.add('text-center')
-    aSideHead.setAttribute('scope', 'col');
-    bSideHead.setAttribute('scope', 'col');
-    delHead.setAttribute('scope', 'col');
-
-    for (let card of listDeck) {
-        const tr = createTableRow(card, deck);
-        tBody.appendChild(tr);
-    }
-    rowHead.append(aSideHead, bSideHead, delHead);
-    tHead.appendChild(rowHead);
-    table.append(tHead, tBody);
-    tableContainer.appendChild(table);
-}
-
-const createTableRow = (card, deck) => {
-    const tr = document.createElement('tr');
-    const aSideTd = document.createElement('td');
-    const bSideTd = document.createElement('td');
-    const delTd = document.createElement('td');
-
-    if (card.a_side.length > 60) {
-        aSideTd.innerText = `${card.a_side.slice(0, 60)}....`;
-    } else {
-        aSideTd.innerText = card.a_side;
-    }
-    if (card.b_side.length > 60) {
-        bSideTd.innerText = `${card.b_side.slice(0, 60)}....`;
-    } else {
-        bSideTd.innerText = card.b_side;
-    }
-    tr.id = card.id;
-    delTd.innerHTML = `<i id="delete" class="fas fa-eraser"></i>`;
-    delTd.classList.add('text-center', 'del-btn');
-
-    tr.addEventListener('click', e => {
-        cardId = card.id;
-        if (e.target.id === "delete") {
-            deleteCard(cardId, deck);
-        } else {
-            handleEdit(cardId);
+    //! filter and delete empty decks
+    for (let deck of res.data) {
+        if (deck.cards.length === 0) {
+            await axios.delete(`${DECKS_URL}/${deck.id}`);
         }
-    })
+    }
 
-    tr.append(aSideTd, bSideTd, delTd);
-    return tr;
+    const res2 = await axios.get(DECKS_URL);
+
+    handleReset(res2.data);
+    generateOptions(res2.data);
+    handleDeckRows(res2.data);
 }
 
 const startDeck = async deck => {
@@ -544,6 +479,81 @@ const createDataOption = deck => {
     const opt = document.createElement('option');
     opt.setAttribute('value', deck.title);
     return opt;
+}
+
+//! Create table of cards
+const getCards = async id => {
+    deleteChildren(cardContainer);
+    deleteChildren(deckContainer);
+    deleteChildren(tableContainer);
+    cardContainer.classList.add('hidden');
+    formContainer.classList.add('hidden');
+    deckContainer.classList.add('hidden');
+    tableContainer.classList.remove('hidden');
+    main = false;
+
+    const deck = await axios.get(`${DECKS_URL}/${id}`);
+    const listDeck = deck.data.cards.filter(c => !c.japanese);
+
+    const table = document.createElement('table');
+    const tHead = document.createElement('thead');
+    const rowHead = document.createElement('tr');
+    const aSideHead = document.createElement('th');
+    const bSideHead = document.createElement('th');
+    const delHead = document.createElement('th');
+
+    const tBody = document.createElement('tbody');
+
+    table.classList.add('table', 'table-hover');
+    aSideHead.innerText = "Side A";
+    bSideHead.innerText = "Side B";
+    delHead.innerText = "Delete";
+    delHead.classList.add('text-center')
+    aSideHead.setAttribute('scope', 'col');
+    bSideHead.setAttribute('scope', 'col');
+    delHead.setAttribute('scope', 'col');
+
+    for (let card of listDeck) {
+        const tr = createTableRow(card, deck);
+        tBody.appendChild(tr);
+    }
+    rowHead.append(aSideHead, bSideHead, delHead);
+    tHead.appendChild(rowHead);
+    table.append(tHead, tBody);
+    tableContainer.appendChild(table);
+}
+
+const createTableRow = (card, deck) => {
+    const tr = document.createElement('tr');
+    const aSideTd = document.createElement('td');
+    const bSideTd = document.createElement('td');
+    const delTd = document.createElement('td');
+
+    if (card.a_side.length > 60) {
+        aSideTd.innerText = `${card.a_side.slice(0, 60)}....`;
+    } else {
+        aSideTd.innerText = card.a_side;
+    }
+    if (card.b_side.length > 60) {
+        bSideTd.innerText = `${card.b_side.slice(0, 60)}....`;
+    } else {
+        bSideTd.innerText = card.b_side;
+    }
+    tr.id = card.id;
+    delTd.innerHTML = `<i id="delete" class="fas fa-eraser"></i>`;
+    delTd.classList.add('text-center', 'del-btn');
+
+    tr.addEventListener('click', e => {
+        cardId = card.id;
+        if (e.target.id === "delete") {
+            deleteCard(cardId, deck);
+        } else {
+            handleEdit(cardId);
+        }
+    })
+
+    tr.append(aSideTd, bSideTd, delTd);
+    return tr;
 }
 
 const handleCard = (a, b, deck, lang=false) => {

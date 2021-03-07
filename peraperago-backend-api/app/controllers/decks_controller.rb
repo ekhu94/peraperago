@@ -21,6 +21,12 @@ class DecksController < ApplicationController
         render json: deck
     end
 
+    def destroy
+        deck = Deck.find_by(id: params[:id])
+        deck.destroy
+        render json: deck
+    end
+
     private
 
     def deck_params
