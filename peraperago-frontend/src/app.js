@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     header.addEventListener('click', (e) => {
         if (!main) {
+            if (!cardId) {
+                formContainer.classList.add('hidden');
+            }
             getDecks();
         }
     });
@@ -50,17 +53,25 @@ const getDecks = async () => {
     handleReset(res2.data);
     generateOptions(res2.data);
     handleDeckRows(res2.data);
+
+    //! handle form toggle
+    if (!cardId) {
+        setTimeout(() => {
+            formContainer.classList.remove('show');
+            formContainer.classList.remove('hidden');
+        }, 300)
+    }
 }
 
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
-    formContainer.classList.add('hidden');
     formContainer.classList.remove('show');
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
 
     main = false;
+    cardId = null;
     deckId = deck.id;
     const res = await axios.get(`${DECKS_URL}/${deckId}`);
     shuffleDeck(res.data);
@@ -87,6 +98,7 @@ const handleReset = async decks => {
 
 const nextCard = async card => {
     card.new = false;
+    cardId = null;
     card.study_date = new Date();
     formContainer.classList.add('hidden');
     await axios.patch(`${CARDS_URL}/${card.id}`, card);
@@ -103,6 +115,7 @@ const nextCard = async card => {
 
 const repeatCard = async () => {
     const deck = await axios.get(`${DECKS_URL}/${deckId}`);
+    cardId = null;
     shuffleDeck(deck.data);
     let count = deck.data.cards.filter(c => c.new === true).length;
     const card = deck.data.cards.find(c => c.new === true);
