@@ -26,27 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-const shuffleDeck = deck => {
-    let count = deck.cards.length;
-    while (count) {
-        deck.cards.push(deck.cards.splice(Math.floor(Math.random() * count), 1)[0]);
-        count -= 1;
-    }
-    return deck;
-}
-
-const handleReset = async decks => {
-    for (let deck of decks) {
-        for (let card of deck.cards) {
-            if (card.study_date !== null && calcTimeDiff(card.study_date)) {
-                card.new = true;
-                card.study_date = null;
-                await axios.patch(`${CARDS_URL}/${card.id}`, card);
-            }
-        }
-    }
-}
-
 const getDecks = async () => {
     main = true;
     deckId = null;
@@ -95,25 +74,15 @@ const startDeck = async deck => {
     }
 }
 
-//! calculate date difference
-const calcTimeDiff = start => {
-    let year = parseInt(start.split('-')[0]);
-    let month = parseInt(start.split('-')[1]);
-    let day = parseInt(start.split('-')[2].split('T')[0]);
-    // let hour = parseInt(start.split('T')[1].split(':')[0]);
-    // let min = parseInt(start.split('T')[1].split(':')[2]);
-    const date = new Date();
-    // console.log(`start year: ${year}, year now: ${date.getFullYear()}`)
-    // console.log(`start month: ${month}, month now: ${date.getMonth() + 1}`)
-    // console.log(`start day: ${day}, day now: ${date.getDate()}`)
-    if (date.getFullYear() > year) {
-        return true;
-    } else if (date.getMonth() + 1 > month) {
-        return true;
-    } else if (date.getDate() > day) {
-        return true;
-    } else {
-        return false;
+const handleReset = async decks => {
+    for (let deck of decks) {
+        for (let card of deck.cards) {
+            if (card.study_date !== null && calcTimeDiff(card.study_date)) {
+                card.new = true;
+                card.study_date = null;
+                await axios.patch(`${CARDS_URL}/${card.id}`, card);
+            }
+        }
     }
 }
 
@@ -142,17 +111,6 @@ const repeatCard = async () => {
     } else {
         getDecks();
     }
-}
-
-const handleDeckRows = decks => {
-    //! Create the row div and add in classes
-    const row = document.createElement('div');
-    row.classList.add('row', 'justify-content-center');
-    for (let deck of decks) {
-        const newDeck = createDeckCard(deck);
-        row.appendChild(newDeck);
-    }
-    deckContainer.appendChild(row);
 }
 
 const handleEdit = async id => {
@@ -259,6 +217,72 @@ const deleteCard = async (id, deck) => {
         }
         getDecks();
     } 
+}
+
+//! calculate date difference
+const calcTimeDiff = start => {
+    let year = parseInt(start.split('-')[0]);
+    let month = parseInt(start.split('-')[1]);
+    let day = parseInt(start.split('-')[2].split('T')[0]);
+    // let hour = parseInt(start.split('T')[1].split(':')[0]);
+    // let min = parseInt(start.split('T')[1].split(':')[2]);
+    const date = new Date();
+    // console.log(`start year: ${year}, year now: ${date.getFullYear()}`)
+    // console.log(`start month: ${month}, month now: ${date.getMonth() + 1}`)
+    // console.log(`start day: ${day}, day now: ${date.getDate()}`)
+    if (date.getFullYear() > year) {
+        return true;
+    } else if (date.getMonth() + 1 > month) {
+        return true;
+    } else if (date.getDate() > day) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+const handleDeckRows = decks => {
+    //! Create the row div and add in classes
+    const row = document.createElement('div');
+    row.classList.add('row', 'justify-content-center');
+    for (let deck of decks) {
+        const newDeck = createDeckCard(deck);
+        row.appendChild(newDeck);
+    }
+    deckContainer.appendChild(row);
+}
+
+const shuffleDeck = deck => {
+    let count = deck.cards.length;
+    while (count) {
+        deck.cards.push(deck.cards.splice(Math.floor(Math.random() * count), 1)[0]);
+        count -= 1;
+    }
+    return deck;
+}
+
+const handleCard = (a, b, deck, lang = false) => {
+    return {
+        a_side: a,
+        b_side: b,
+        new: true,
+        study_date: null,
+        deck_id: deck.id,
+        japanese: lang
+    }
+}
+
+const generateOptions = decks => {
+    for (let deck of decks) {
+        const opt = createDataOption(deck);
+        datalist.appendChild(opt);
+    }
+}
+
+const createDataOption = deck => {
+    const opt = document.createElement('option');
+    opt.setAttribute('value', deck.title);
+    return opt;
 }
 
 const deleteChildren = el => {
@@ -468,19 +492,6 @@ const generateForm = decks => {
     formContainer.appendChild(form);
 }
 
-const generateOptions = decks => {
-    for (let deck of decks) {
-        const opt = createDataOption(deck);
-        datalist.appendChild(opt);
-    }
-}
-
-const createDataOption = deck => {
-    const opt = document.createElement('option');
-    opt.setAttribute('value', deck.title);
-    return opt;
-}
-
 //! Create table of cards
 const getCards = async id => {
     deleteChildren(cardContainer);
@@ -554,15 +565,4 @@ const createTableRow = (card, deck) => {
 
     tr.append(aSideTd, bSideTd, delTd);
     return tr;
-}
-
-const handleCard = (a, b, deck, lang=false) => {
-    return {
-        a_side: a,
-        b_side: b,
-        new: true,
-        study_date: null,
-        deck_id: deck.id,
-        japanese: lang
-    }
 }
