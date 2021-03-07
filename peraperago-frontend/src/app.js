@@ -184,6 +184,7 @@ const handleForm = async e => {
 
             e.target.reset();
             const btn = e.target.querySelector('button');
+            const span = btn.querySelector('span');
             const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
             const deckCard = document.getElementById(getRes.data.id);
             const oldDeckCard = document.getElementById(oldDeck.id);
@@ -191,7 +192,9 @@ const handleForm = async e => {
             const oldP = oldDeckCard.querySelector('p.card-text');
             p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
             oldP.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
-            btn.innerText = "Create Card";
+            btn.innerText = "Create";
+            span.innerText = " Card";
+            btn.appendChild(span);
             //! not sure if this is good
             cardId = null;
         } else {
@@ -202,6 +205,14 @@ const handleForm = async e => {
             e.target.reset();
             const getRes = await axios.get(`${DECKS_URL}/${deck.id}`);
             const deckCard = document.getElementById(getRes.data.id);
+            const h5 = deckCard.querySelector('h5');
+            deckCard.addEventListener('mouseenter', () => {
+                h5.innerText = "Start Studying!";
+            })
+
+            deckCard.addEventListener('mouseleave', () => {
+                h5.innerText = "";
+            })
             const p = deckCard.querySelector('p.card-text');
             p.innerText = `${getRes.data.cards.filter(c => c.new === true).length} cards ready`;
         }
@@ -397,100 +408,100 @@ const createFlashcard = async (card, count) => {
     cardContainer.append(cardMain, counter, btns);
 }
 
-const generateForm = decks => {
+// const generateForm = decks => {
 
-    //! Create form elements
+//     //! Create form elements
 
-    const form = document.createElement('form');
+//     const form = document.createElement('form');
 
-    const rowA = document.createElement('div');
-    const rowB = document.createElement('div');
-    const rowData = document.createElement('div');
-    const rowSubmit = document.createElement('div');
+//     const rowA = document.createElement('div');
+//     const rowB = document.createElement('div');
+//     const rowData = document.createElement('div');
+//     const rowSubmit = document.createElement('div');
 
-    const colA = document.createElement('div');
-    const colB = document.createElement('div');
-    const colData = document.createElement('div');
-    const subBtn = document.createElement('button');
+//     const colA = document.createElement('div');
+//     const colB = document.createElement('div');
+//     const colData = document.createElement('div');
+//     const subBtn = document.createElement('button');
 
-    const aLabel = document.createElement('label');
-    const aInput = document.createElement('input');
+//     const aLabel = document.createElement('label');
+//     const aInput = document.createElement('input');
 
-    const bLabel = document.createElement('label');
-    const bInput = document.createElement('input');
+//     const bLabel = document.createElement('label');
+//     const bInput = document.createElement('input');
 
-    const dataLabel = document.createElement('label');
-    const dataInput = document.createElement('input');
-    const datalist = document.createElement('datalist');
+//     const dataLabel = document.createElement('label');
+//     const dataInput = document.createElement('input');
+//     const datalist = document.createElement('datalist');
 
-    //! Add classes and attrs to elements
+//     //! Add classes and attrs to elements
 
-    form.id = "new-card-form";
+//     form.id = "new-card-form";
 
-    rowA.classList.add('row', 'justify-content-center');
-    rowB.classList.add('row', 'justify-content-center');
-    rowData.classList.add('row', 'justify-content-center');
-    rowSubmit.classList.add('row', 'justify-content-center');
+//     rowA.classList.add('row', 'justify-content-center');
+//     rowB.classList.add('row', 'justify-content-center');
+//     rowData.classList.add('row', 'justify-content-center');
+//     rowSubmit.classList.add('row', 'justify-content-center');
 
-    colA.classList.add('mb-1', 'col-8', 'col-md-5');
-    colB.classList.add('mb-1', 'col-8', 'col-md-5');
-    colData.classList.add('mb-1', 'col-8', 'col-md-5');
-    subBtn.setAttribute('type', 'submit');
-    subBtn.classList.add('mt-4', 'btn', 'btn-outline-info', 'col-3');
-    subBtn.innerText = "Create Card";
+//     colA.classList.add('mb-1', 'col-8', 'col-md-5');
+//     colB.classList.add('mb-1', 'col-8', 'col-md-5');
+//     colData.classList.add('mb-1', 'col-8', 'col-md-5');
+//     subBtn.setAttribute('type', 'submit');
+//     subBtn.classList.add('mt-4', 'btn', 'btn-outline-info', 'col-3');
+//     subBtn.innerText = "Create Card";
 
-    aLabel.setAttribute('for', 'a-side');
-    aLabel.classList.add('form-label');
-    aLabel.innerText = "Front";
-    bLabel.setAttribute('for', 'b-side');
-    bLabel.classList.add('form-label');
-    bLabel.innerText = "Back";
+//     aLabel.setAttribute('for', 'a-side');
+//     aLabel.classList.add('form-label');
+//     aLabel.innerText = "Front";
+//     bLabel.setAttribute('for', 'b-side');
+//     bLabel.classList.add('form-label');
+//     bLabel.innerText = "Back";
 
-    aInput.setAttribute('type', 'text');
-    aInput.setAttribute('aria-describedby', 'frontHelp');
-    aInput.setAttribute('name', 'aSide');
-    aInput.id = "a-side";
-    aInput.classList.add('form-control');
-    bInput.setAttribute('type', 'text');
-    bInput.setAttribute('aria-describedby', 'backHelp');
-    bInput.setAttribute('name', 'bSide');
-    bInput.id = "b-side";
-    bInput.classList.add('form-control');
+//     aInput.setAttribute('type', 'text');
+//     aInput.setAttribute('aria-describedby', 'frontHelp');
+//     aInput.setAttribute('name', 'aSide');
+//     aInput.id = "a-side";
+//     aInput.classList.add('form-control');
+//     bInput.setAttribute('type', 'text');
+//     bInput.setAttribute('aria-describedby', 'backHelp');
+//     bInput.setAttribute('name', 'bSide');
+//     bInput.id = "b-side";
+//     bInput.classList.add('form-control');
 
-    dataLabel.setAttribute('for', 'deckId');
-    dataLabel.classList.add('form-label');
-    dataLabel.innerText = "Add To Deck";
+//     dataLabel.setAttribute('for', 'deckId');
+//     dataLabel.classList.add('form-label');
+//     dataLabel.innerText = "Add To Deck";
 
-    dataInput.setAttribute('list', 'decks');
-    dataInput.setAttribute('name', 'deckId');
-    dataInput.id = "deckId";
-    dataInput.classList.add('form-control');
+//     dataInput.setAttribute('list', 'decks');
+//     dataInput.setAttribute('name', 'deckId');
+//     dataInput.id = "deckId";
+//     dataInput.classList.add('form-control');
 
-    datalist.id = "decks";
+//     datalist.id = "decks";
 
-    //! Populate datalist with deck options
-    for (let deck of decks) {
-        const opt = createDataOption(deck);
-        datalist.appendChild(opt);
-    }
+//     //! Populate datalist with deck options
+//     for (let deck of decks) {
+//         const opt = createDataOption(deck);
+//         datalist.appendChild(opt);
+//     }
 
-    //! Add post request to submit
-    form.addEventListener('submit', handleForm);
+//     //! Add post request to submit
+//     form.addEventListener('submit', handleForm);
 
-    //! Append all elements to form
+//     //! Append all elements to form
 
-    colA.append(aLabel, aInput);
-    colB.append(bLabel, bInput);
-    colData.append(dataLabel, dataInput, datalist);
+//     colA.append(aLabel, aInput);
+//     colB.append(bLabel, bInput);
+//     colData.append(dataLabel, dataInput, datalist);
 
-    rowA.appendChild(colA);
-    rowB.appendChild(colB);
-    rowData.appendChild(colData);
-    rowSubmit.appendChild(subBtn);
+//     rowA.appendChild(colA);
+//     rowB.appendChild(colB);
+//     rowData.appendChild(colData);
+//     rowSubmit.appendChild(subBtn);
 
-    form.append(rowA, rowB, rowData, rowSubmit);
-    formContainer.appendChild(form);
-}
+//     form.append(rowA, rowB, rowData, rowSubmit);
+//     formContainer.appendChild(form);
+// }
 
 //! Create table of cards
 const getCards = async id => {
