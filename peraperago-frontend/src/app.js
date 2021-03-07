@@ -1,7 +1,7 @@
 const DECKS_URL = 'http://localhost:3000/decks';
 const CARDS_URL = 'http://localhost:3000/cards';
-const header = document.querySelector('h1#header');
-const formContainer = document.querySelector('#form-container');
+const header = document.querySelector('a');
+const formContainer = document.querySelector('#formContainer');
 const form = document.querySelector('form');
 const datalist = document.querySelector('#decks');
 const tableContainer = document.querySelector('div.table-container')
@@ -14,10 +14,10 @@ let main = true;
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
 
-    header.addEventListener('click', () => {
-        if (main) {
-            formContainer.classList.toggle('hidden');
-        } else {
+    header.addEventListener('click', (e) => {
+        if (!main) {
+            
+            formContainer.classList.remove('show');
             getDecks();
         }
     });
@@ -33,8 +33,7 @@ const getDecks = async () => {
     deleteChildren(deckContainer);
     deleteChildren(datalist);
     deleteChildren(tableContainer);
-    formContainer.classList.add('hidden');
-    deckContainer.classList.remove('hidden');
+    formContainer.classList.remove('show');
     cardContainer.classList.add('hidden');
     tableContainer.classList.add('hidden');
 
@@ -57,7 +56,7 @@ const getDecks = async () => {
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
-    formContainer.classList.add('hidden');
+    formContainer.classList.remove('show');
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
 
@@ -115,7 +114,7 @@ const repeatCard = async () => {
 
 const handleEdit = async id => {
     getDecks();
-    formContainer.classList.remove('hidden');
+    formContainer.classList.add('show');
     const aSide = form.querySelector('input#a-side');
     const bSide = form.querySelector('input#b-side');
     const deck = form.querySelector('input#deckId');
@@ -509,7 +508,7 @@ const getCards = async id => {
     deleteChildren(deckContainer);
     deleteChildren(tableContainer);
     cardContainer.classList.add('hidden');
-    formContainer.classList.add('hidden');
+    formContainer.classList.remove('show');
     deckContainer.classList.add('hidden');
     tableContainer.classList.remove('hidden');
     main = false;

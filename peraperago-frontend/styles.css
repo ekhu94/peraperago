@@ -22,8 +22,16 @@ body {
     /* max-height: 100%; */
 }
 
+a {
+    text-decoration: none;
+}
+
 form {
     color: #e1e1e1;
+}
+
+.hidden {
+    display: none;
 }
 
 form input.form-control:focus {
@@ -193,10 +201,6 @@ td.del-btn {
 td.del-btn:hover {
     color: #e63946;
     transition: color 0.3s;
-}
-
-.hidden {
-    display: none;
 }
 
 .japanese {
