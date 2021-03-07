@@ -195,7 +195,7 @@ const handleForm = async e => {
             //! not sure if this is good
             cardId = null;
         } else {
-            const card1 = handleCard(aSide, bSide, deck, false);
+            const card1 = handleCard(aSide, bSide, deck);
             const card2 = handleCard(bSide, aSide, deck, true);
             await axios.post(CARDS_URL, card1);
             await axios.post(CARDS_URL, card2);
@@ -268,7 +268,7 @@ const handleCard = (a, b, deck, lang = false) => {
         new: true,
         study_date: null,
         deck_id: deck.id,
-        japanese: lang
+        study_lang: lang
     }
 }
 
@@ -441,10 +441,10 @@ const generateForm = decks => {
 
     aLabel.setAttribute('for', 'a-side');
     aLabel.classList.add('form-label');
-    aLabel.innerText = "Front Side";
+    aLabel.innerText = "Front";
     bLabel.setAttribute('for', 'b-side');
     bLabel.classList.add('form-label');
-    bLabel.innerText = "Back Side";
+    bLabel.innerText = "Back";
 
     aInput.setAttribute('type', 'text');
     aInput.setAttribute('aria-describedby', 'frontHelp');
@@ -504,7 +504,7 @@ const getCards = async id => {
     main = false;
 
     const deck = await axios.get(`${DECKS_URL}/${id}`);
-    const listDeck = deck.data.cards.filter(c => !c.japanese);
+    const listDeck = deck.data.cards.filter(c => !c.study_lang);
 
     const table = document.createElement('table');
     const tHead = document.createElement('thead');
@@ -515,7 +515,7 @@ const getCards = async id => {
 
     const tBody = document.createElement('tbody');
 
-    table.classList.add('table', 'table-hover');
+    table.classList.add('table', 'table-hover', 'my-5');
     aSideHead.innerText = "Side A";
     bSideHead.innerText = "Side B";
     delHead.innerText = "Delete";
@@ -539,6 +539,9 @@ const createTableRow = (card, deck) => {
     const aSideTd = document.createElement('td');
     const bSideTd = document.createElement('td');
     const delTd = document.createElement('td');
+
+    aSideTd.classList.add('card-td');
+    bSideTd.classList.add('card-td');
 
     if (card.a_side.length > 60) {
         aSideTd.innerText = `${card.a_side.slice(0, 60)}....`;

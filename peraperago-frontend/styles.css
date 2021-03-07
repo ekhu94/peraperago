@@ -33,7 +33,7 @@ form input.form-control:focus {
 
 .card {
     /* padding-top: 10px; */
-    margin: 2rem 2rem 3rem;
+    margin: 2.5rem 2rem 3rem;
     line-height: 1.2rem;
     cursor: pointer;
     border-radius: 20px;
@@ -182,6 +182,7 @@ th {
 td {
     color: var(--light);
     cursor: pointer;
+    text-shadow: var(--primary) 1px 2px 2px;
 }
 
 td.del-btn {
@@ -190,6 +191,7 @@ td.del-btn {
 
 td.del-btn:hover {
     color: #e63946;
+    transition: color 0.3s;
 }
 
 .hidden {
@@ -220,6 +222,10 @@ h1#header:hover {
 
 @media (max-width: 800px) {
 
+    td.card-td {
+        font-size: 0.9rem;
+    }
+
     .card h3{
         font-size: 1.2rem;
     }
@@ -238,15 +244,6 @@ h1#header:hover {
         display: none;
     }
 
-    /* button.btn-outline-light {
-    font-size: 0.5rem;
-    padding: 0.8rem 6rem;
-}
-
-button.btn-outline-light:hover {
-    font-size: 0.6rem;
-} */
-
     .buttons button.btn {
         font-size: 1.3rem;
         margin: 0 1.5em 2em;
@@ -260,6 +257,10 @@ button.btn-outline-light:hover {
 }
 
 @media (max-width: 560px) {
+
+    td.card-td {
+        font-size: 0.8rem;
+    }
 
     .card h3{
         font-size: 1.2rem;
@@ -276,6 +277,10 @@ button.btn-outline-light:hover {
 }
 
 @media (max-width: 420px) {
+
+    td.card-td {
+        font-size: 0.6rem;
+    }
 
     .card-main {
         margin: 30% auto 4%;

@@ -5,7 +5,7 @@ class CreateCards < ActiveRecord::Migration[6.1]
       t.string :b_side
       t.boolean :new
       t.datetime :study_date
-      t.boolean :japanese
+      t.boolean :study_lang
       t.references :deck, null: false, foreign_key: true
 
       t.timestamps

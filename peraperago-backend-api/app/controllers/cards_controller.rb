@@ -30,7 +30,7 @@ class CardsController < ApplicationController
     private
 
     def card_params
-        params.require(:card).permit(:a_side, :b_side, :new, :deck_id, :study_date, :japanese)
+        params.require(:card).permit(:a_side, :b_side, :new, :deck_id, :study_date, :study_lang)
     end
 
 end
