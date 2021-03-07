@@ -16,8 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     header.addEventListener('click', (e) => {
         if (!main) {
-            
-            formContainer.classList.remove('show');
             getDecks();
         }
     });
@@ -34,6 +32,7 @@ const getDecks = async () => {
     deleteChildren(datalist);
     deleteChildren(tableContainer);
     formContainer.classList.remove('show');
+    deckContainer.classList.remove('hidden');
     cardContainer.classList.add('hidden');
     tableContainer.classList.add('hidden');
 
@@ -56,6 +55,7 @@ const getDecks = async () => {
 const startDeck = async deck => {
     deleteChildren(cardContainer);
     deleteChildren(deckContainer);
+    formContainer.classList.add('hidden');
     formContainer.classList.remove('show');
     deckContainer.classList.add('hidden');
     cardContainer.classList.remove('hidden');
@@ -88,6 +88,7 @@ const handleReset = async decks => {
 const nextCard = async card => {
     card.new = false;
     card.study_date = new Date();
+    formContainer.classList.add('hidden');
     await axios.patch(`${CARDS_URL}/${card.id}`, card);
     const deck = await axios.get(`${DECKS_URL}/${deckId}`);
     shuffleDeck(deck.data);
