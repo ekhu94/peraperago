@@ -349,10 +349,17 @@ const createDeckCard = deck => {
     })
 
     //! add event listener for window width display
-    let widthMatch = window.matchMedia("(max-width: 800px)");
-    widthMatch.addEventListener('change', e => {
+    let widthMatchMax = window.matchMedia("(max-width: 800px)");
+    let widthMatchMin = window.matchMedia("(min-width: 801px)");
+
+    widthMatchMax.addEventListener('change', e => {
         if (e.matches) {
             h5.style.display = "block";
+        }
+    })
+    widthMatchMin.addEventListener('change', e => {
+        if (e.matches) {
+            h5.style.display = "none";
         }
     })
 
