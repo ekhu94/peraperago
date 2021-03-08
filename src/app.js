@@ -347,6 +347,13 @@ const createDeckCard = deck => {
     card.addEventListener('mouseleave', () => {
         h5.style.display = "none";
     })
+
+    let widthMatch = window.matchMedia("(max-width: 800px)");
+    widthMatch.addEventListener('change', e => {
+        if (e.matches) {
+            h5.style.display = "block";
+        }
+    })
     // card.addEventListener('mouseenter', () => {
     //     if (!deck.cards.some(c => c.new === true)) {
     //         h5.innerText = "All Done!"
