@@ -1,5 +1,5 @@
-const DECKS_URL = 'http://localhost:3000/decks';
-const CARDS_URL = 'http://localhost:3000/cards';
+const DECKS_URL = 'https://peraperago-flashcards.herokuapp.com/decks';
+const CARDS_URL = 'https://peraperago-flashcards.herokuapp.com/cards';
 const header = document.querySelector('a');
 const formContainer = document.querySelector('#formContainer');
 const form = document.querySelector('form');
