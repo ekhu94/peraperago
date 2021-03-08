@@ -1,0 +1,307 @@
+:root {
+    --primary: #034078;
+    --secondary: #001f54;
+    --success: #1282a2;
+    --dark: #0a1128;
+    --light: #fbfcfe;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:'Noto Sans JP', sans-serif;
+    background-image: linear-gradient(to bottom right, var(--secondary), var(--light));
+    width: 100%;
+    /* height: 100%; */
+    min-height: 100vh;
+    /* max-height: 100vh; */
+    /* max-height: 100%; */
+}
+
+a {
+    text-decoration: none;
+}
+
+form {
+    color: #e1e1e1;
+}
+
+.hidden {
+    display: none;
+}
+
+form input.form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.card {
+    /* padding-top: 10px; */
+    margin: 2.5rem 2rem 3rem;
+    line-height: 1.2rem;
+    cursor: pointer;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px 1px var(--dark);
+}
+
+.card .card-subtitle:hover {
+    color: #88e5ff;
+}
+
+.card:hover {
+    transform: translateY(0.25em);
+    transition: all 0.6s;
+    font-weight: 400;
+    opacity: 0.8;
+    background-color: #03407898;
+    color: var(--light);
+}
+
+.card-main {
+    margin: 4rem auto 0;
+    width: 35em;
+    height: 20em;
+    perspective: 800px;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card-inner.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* padding: 20px; */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: 0px 3px 18px 3px var(--dark);
+}
+
+.card-face-front {
+    background-color: var(--light);
+    /* background-image: linear-gradient(to bottom right, var(--light), var(--dark)); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-face-back {
+    background-color: var(--light);
+    /* background-image: linear-gradient(to bottom right, var(--primary), var(--light)); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateY(180deg);
+}
+
+.card-inner p {
+    font-size: 1.6rem;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.counter {
+    color: #fff;
+    font-size: 1.3rem;
+    text-shadow: var(--dark) 1px 2px 2px;
+}
+
+button.btn-outline-light {
+    text-align: center;
+    font-size: 0.8rem;
+    margin: 0 2em;
+    border-radius: 20px;
+    border: 2px solid;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+button.btn-outline-light:hover {
+    transition: all 0.3s;
+    color: var(--light);;
+    background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #fff;
+    border-color: var(--light);
+    font-size: 0.9rem;
+    transform: scale(1.03, 1.03);
+    text-shadow: 3px 3px 5px #000000;
+}
+
+.buttons button.btn {
+    font-size: 1.6rem;
+    margin: 0 2em 2em;
+    padding: 1rem 5rem;
+    border-radius: 16px;
+    border: 2px solid;
+    color: #fff;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.buttons button.btn.btn-outline-success {
+    border-color: var(--success);
+    font-weight: 400;
+}
+
+.buttons button.btn.btn-outline-success:hover {
+    background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #3aafb9;
+    text-shadow: 3px 3px 5px #000000;
+    transform: translateY(-0.25em);
+    transition: all 0.3s;
+}
+
+.buttons button.btn.btn-outline-danger {
+    border-color: #dd2d4a;
+    font-weight: 400;
+}
+
+.buttons button.btn.btn-outline-danger:hover {
+    background-color: transparent;
+    box-shadow: 0 0.5em 0.5em -0.4em #f26a8d;
+    text-shadow: 3px 3px 5px #000000;
+    transform: translateY(-0.25em);
+    transition: all 0.3s;
+}
+
+th {
+    color: #ffffff;
+}
+
+td {
+    color: var(--light);
+    cursor: pointer;
+    text-shadow: var(--primary) 1px 2px 2px;
+}
+
+td.del-btn {
+    color: var(--light);
+}
+
+td.del-btn:hover {
+    color: #e63946;
+    transition: color 0.3s;
+}
+
+.japanese {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    font-weight: 300;
+}
+
+h1#header {
+    text-align: center;
+    color: #fff;
+    font-size: 3.5rem;
+    letter-spacing: 1.5rem;
+    margin-top: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    text-shadow: var(--primary) 3px 5px 2px;
+}
+
+h1#header:hover {
+    text-shadow: var(--primary) 5px 7px 4px;
+    transform: scale(1.02, 1.02);
+    transition: all 0.4s;
+}
+
+@media (max-width: 800px) {
+
+    td.card-td {
+        font-size: 0.9rem;
+    }
+
+    .card h3{
+        font-size: 1.2rem;
+    }
+
+    .card h5{
+        font-size: 1rem;
+    }
+
+    .card-main {
+        margin: 15% auto 4%;
+        width: 20em;
+        height: 30em;
+    }
+
+    span {
+        display: none;
+    }
+
+    .buttons button.btn {
+        font-size: 1.3rem;
+        margin: 0 1.5em 2em;
+        padding: 1rem 4rem;
+    }
+
+    h1#header {
+        font-size: 2.5rem;
+        letter-spacing: 1.2rem;
+    }
+}
+
+@media (max-width: 560px) {
+
+    td.card-td {
+        font-size: 0.8rem;
+    }
+
+    .card h3{
+        font-size: 1.2rem;
+    }
+
+    .card p {
+        font-size: 1rem;
+    }
+
+    .card h5{
+        font-size: 1rem;
+    }
+
+}
+
+@media (max-width: 420px) {
+
+    td.card-td {
+        font-size: 0.6rem;
+    }
+
+    .card-main {
+        margin: 30% auto 4%;
+        width: 15rem;
+        height: 25rem;
+        /* font-size: 0.5rem; */
+    }
+
+    .buttons button.btn {
+        font-size: 0.8rem;
+        margin: 0 1rem 2rem;
+        padding: 1rem 3rem;
+    }
+
+    h1#header {
+        font-size: 1.8rem;
+        letter-spacing: 0.8rem;
+    }
+}
