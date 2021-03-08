@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://ekhu94.github.io/peraperago/'
+    origins 'https://peraperago-flashcards.herokuapp.com/'
 
     resource '*',
       headers: :any,
