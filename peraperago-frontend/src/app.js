@@ -59,7 +59,7 @@ const getDecks = async () => {
         setTimeout(() => {
             formContainer.classList.remove('show');
             formContainer.classList.remove('hidden');
-        }, 300)
+        }, 200)
     }
 }
 
