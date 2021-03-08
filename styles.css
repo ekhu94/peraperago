@@ -234,7 +234,7 @@ h1#header:hover {
 @media (max-width: 800px) {
 
     .card h5.card-subtitle {
-    display: block;
+    display: block !important;
 }
 
     td.card-td {
