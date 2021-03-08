@@ -348,23 +348,13 @@ const createDeckCard = deck => {
         h5.style.display = "none";
     })
 
+    //! add event listener for window width display
     let widthMatch = window.matchMedia("(max-width: 800px)");
     widthMatch.addEventListener('change', e => {
         if (e.matches) {
             h5.style.display = "block";
         }
     })
-    // card.addEventListener('mouseenter', () => {
-    //     if (!deck.cards.some(c => c.new === true)) {
-    //         h5.innerText = "All Done!"
-    //     } else {
-    //         h5.innerText = "Start Studying!";
-    //     }
-    // })
-
-    // card.addEventListener('mouseleave', () => {
-    //     h5.innerText = "";
-    // })
 
     //! add event listener for showing cards AND start study
     card.addEventListener('click', e => {
