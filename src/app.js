@@ -330,23 +330,34 @@ const createDeckCard = deck => {
     h3.classList.add('card-title', 'pb-3');
     h3.innerText = deck.title;
     h5.classList.add('card-subtitle', 'mb-2');
-    h5.innerText.innerText = "";
     h5.id = "start";
     p.classList.add('card-text');
     p.innerText = `${deck.cards.filter(c => c.new === true).length} cards ready`;
 
-    //! add eventlistener for mouse-over to show "study" text
-    card.addEventListener('mouseenter', () => {
-        if (!deck.cards.some(c => c.new === true)) {
-            h5.innerText = "All Done!"
-        } else {
-            h5.innerText = "Start Studying!";
-        }
-    })
+    //! change text in h5 based on number of cards
+    if (!deck.cards.some(c => c.new === true)) {
+        h5.innerText = "All Done!"
+    } else {
+        h5.innerText = "Start Studying!";
+    }
 
-    card.addEventListener('mouseleave', () => {
-        h5.innerText = "";
+    card.addEventListener('mouseenter', () => {
+        h5.style.display = "block";
     })
+    card.addEventListener('mouseleave', () => {
+        h5.style.display = "none";
+    })
+    // card.addEventListener('mouseenter', () => {
+    //     if (!deck.cards.some(c => c.new === true)) {
+    //         h5.innerText = "All Done!"
+    //     } else {
+    //         h5.innerText = "Start Studying!";
+    //     }
+    // })
+
+    // card.addEventListener('mouseleave', () => {
+    //     h5.innerText = "";
+    // })
 
     //! add event listener for showing cards AND start study
     card.addEventListener('click', e => {

@@ -48,8 +48,14 @@ form input.form-control:focus {
     box-shadow: 1px 1px 1px 1px var(--dark);
 }
 
-.card .card-subtitle:hover {
+.card h5.card-subtitle {
+    display: none;
+    transition: display 0.3s;
+}
+
+.card h5.card-subtitle:hover {
     color: #88e5ff;
+    transition: display 0.3s;
 }
 
 .card:hover {
@@ -226,6 +232,10 @@ h1#header:hover {
 }
 
 @media (max-width: 800px) {
+
+    .card h5.card-subtitle {
+    display: block;
+}
 
     td.card-td {
         font-size: 0.9rem;
