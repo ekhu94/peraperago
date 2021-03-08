@@ -41,27 +41,29 @@ form input.form-control:focus {
 
 .card {
     /* padding-top: 10px; */
-    margin: 2.5rem 2rem 3rem;
+    margin: 2.5rem 2rem 2.5rem;
     line-height: 1.2rem;
+    font-weight: 300;
     cursor: pointer;
     border-radius: 20px;
     box-shadow: 1px 1px 1px 1px var(--dark);
 }
 
-.card h5.card-subtitle {
-    display: none;
-    transition: display 0.3s;
+.card h3 {
+    font-weight: 300;
 }
 
-.card h5.card-subtitle:hover {
+.card h5.card-subtitle.study:hover {
     color: #88e5ff;
-    transition: display 0.3s;
+    font-weight: 400;
+    transform: scale(1.05, 1.05);
+    transition: all 0.3s;
 }
 
 .card:hover {
     transform: translateY(0.25em);
     transition: all 0.6s;
-    font-weight: 400;
+    /* font-weight: 400; */
     opacity: 0.8;
     background-color: #03407898;
     color: var(--light);
@@ -69,6 +71,7 @@ form input.form-control:focus {
 
 .card-main {
     margin: 4rem auto 0;
+    font-weight: 300;
     width: 35em;
     height: 20em;
     perspective: 800px;
@@ -129,6 +132,7 @@ form input.form-control:focus {
 
 .counter {
     color: #fff;
+    font-weight: 300;
     font-size: 1.3rem;
     text-shadow: var(--dark) 1px 2px 2px;
 }
@@ -136,6 +140,7 @@ form input.form-control:focus {
 button.btn-outline-light {
     text-align: center;
     font-size: 0.8rem;
+    font-weight: 300;
     margin: 0 2em;
     border-radius: 20px;
     border: 2px solid;
@@ -156,6 +161,7 @@ button.btn-outline-light:hover {
 
 .buttons button.btn {
     font-size: 1.6rem;
+    font-weight: 300;
     margin: 0 2em 2em;
     padding: 1rem 5rem;
     border-radius: 16px;
@@ -166,7 +172,7 @@ button.btn-outline-light:hover {
 
 .buttons button.btn.btn-outline-success {
     border-color: var(--success);
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .buttons button.btn.btn-outline-success:hover {
@@ -179,7 +185,7 @@ button.btn-outline-light:hover {
 
 .buttons button.btn.btn-outline-danger {
     border-color: #dd2d4a;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 .buttons button.btn.btn-outline-danger:hover {
@@ -220,7 +226,7 @@ h1#header {
     font-size: 3.5rem;
     letter-spacing: 1.5rem;
     margin-top: 1rem;
-    font-weight: 400;
+    font-weight: 300;
     cursor: pointer;
     text-shadow: var(--primary) 3px 5px 2px;
 }
@@ -232,10 +238,6 @@ h1#header:hover {
 }
 
 @media (max-width: 800px) {
-
-    .card h5.card-subtitle {
-    display: block !important;
-}
 
     td.card-td {
         font-size: 0.9rem;

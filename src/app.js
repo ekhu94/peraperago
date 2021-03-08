@@ -7,25 +7,11 @@ const datalist = document.querySelector('#decks');
 const tableContainer = document.querySelector('div.table-container')
 const deckContainer = document.querySelector('div.deck-container');
 const cardContainer = document.querySelector('div.card-container');
-let widthMatchMax = window.matchMedia("(max-width: 800px)");
-let widthMatchMin = window.matchMedia("(min-width: 801px)");
+// let widthMatchMax = window.matchMedia("(max-width: 800px)");
+// let widthMatchMin = window.matchMedia("(min-width: 801px)");
 let deckId = null;
 let cardId = null;
 let main = true;
-
-//! add event listener for window width display
-
-widthMatchMax.addEventListener('change', e => {
-    if (e.matches) {
-        h5.style.display = "block";
-    }
-})
-
-widthMatchMin.addEventListener('change', e => {
-    if (e.matches) {
-        h5.style.display = "none";
-    }
-})
 
 document.addEventListener('DOMContentLoaded', () => {
     getDecks();
@@ -352,22 +338,26 @@ const createDeckCard = deck => {
 
     //! change text in h5 based on number of cards
     if (!deck.cards.some(c => c.new === true)) {
-        h5.innerText = "All Done!"
+        h5.classList.remove('study');
+        h5.innerText = "All Done";
     } else {
-        h5.innerText = "Start Studying!";
+        h5.classList.add('study');
+        h5.innerText = "Start Study";
     }
 
-    card.addEventListener('mouseenter', () => {
-        h5.style.display = "block";
-    })
-    card.addEventListener('mouseleave', () => {
-        h5.style.display = "none";
-    })
+    // card.addEventListener('mouseenter', () => {
+    //     h5.style.display = "block";
+    // })
+    // card.addEventListener('mouseleave', () => {
+    //     h5.style.display = "none";
+    // })
 
     //! add event listener for showing cards AND start study
     card.addEventListener('click', e => {
         if (e.target.id === "start") {
-            startDeck(deck);
+            if (h5.classList.contains('study')) {
+                startDeck(deck);
+            }
         } else {
             getCards(deck.id);
         }
