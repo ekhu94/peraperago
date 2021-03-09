@@ -239,6 +239,10 @@ h1#header:hover {
 
 @media (max-width: 800px) {
 
+    th {
+        font-size: 0.9rem;
+    }
+
     td.card-td {
         font-size: 0.9rem;
     }
@@ -275,6 +279,10 @@ h1#header:hover {
 
 @media (max-width: 560px) {
 
+    th {
+        font-size: 0.8rem;
+    }
+
     td.card-td {
         font-size: 0.8rem;
     }
@@ -295,6 +303,10 @@ h1#header:hover {
 
 @media (max-width: 420px) {
 
+    th {
+        font-size: 0.6rem;
+    }
+
     td.card-td {
         font-size: 0.6rem;
     }
@@ -307,9 +319,10 @@ h1#header:hover {
     }
 
     .buttons button.btn {
-        font-size: 0.8rem;
+        font-size: 1rem;
         margin: 0 1rem 2rem;
         padding: 1rem 3rem;
+        font-weight: 400;
     }
 
     h1#header {
