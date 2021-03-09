@@ -4,7 +4,7 @@ peraperaGo! is an application where users can create and review custom flashcard
 
 New flashcards are input into new or existing decks, and each flashcard you create generates a front side and a back side, requiring you to study both before completion. To create a new flashcard, simply click on the `peraperaGo header` at the top of the page and fill out the `Create Card` form.
 
-To begin reviewing a deck with new cards, simply press the `Start Studying!` text highlighted inside each deck when the mouse is hovered over. This will take you to the flashcard study component.
+To begin reviewing a deck with new cards, simply press the `Start Studying!` text highlighted inside each deck when the mouse is hovered over. This will take you to the flashcard study component. Reviewed cards will be reset and added back to the deck every 24 hours.
 
 Each deck is displayed on the main page along with how many cards are ready to be studied. When a deck is clicked, a list of all the cards it contains is shown. You can click on any specific card to update its fields in the `Update Card` form. Clicking a card's respective delete icon on the right will remove the card's front side and back side from the deck.
 
