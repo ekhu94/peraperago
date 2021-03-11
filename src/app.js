@@ -254,11 +254,11 @@ const calcTimeDiff = start => {
     // console.log(`start year: ${year}, year now: ${date.getFullYear()}`)
     // console.log(`start month: ${month}, month now: ${date.getMonth() + 1}`)
     // console.log(`start day: ${day}, day now: ${date.getDate()}`)
-    if (date.getFullYear() !== year) {
+    if (date.getFullYear() > year) {
         return true;
-    } else if (date.getMonth() + 1 !== month) {
+    } else if (date.getMonth() + 1 > month) {
         return true;
-    } else if (date.getDate() !== day) {
+    } else if (date.getDate() > day) {
         return true;
     } else {
         return false;
