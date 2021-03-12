@@ -87,7 +87,7 @@ const startDeck = async deck => {
 const handleReset = async decks => {
     for (let deck of decks) {
         for (let card of deck.cards) {
-            if (card.study_date !== null && calcTimeDiff(card.study_date)) {
+            if (card.study_date && calcTimeDiff(card.study_date)) {
                 card.new = true;
                 card.study_date = null;
                 await axios.patch(`${CARDS_URL}/${card.id}`, card);
@@ -256,13 +256,14 @@ const calcTimeDiff = start => {
     // console.log(`start day: ${day}, day now: ${date.getDate()}`)
     if (date.getFullYear() > year) {
         return true;
-    } else if (date.getMonth() + 1 > month) {
-        return true;
-    } else if (date.getDate() > day) {
-        return true;
-    } else {
-        return false;
     }
+    if (date.getMonth() + 1 > month) {
+        return true;
+    }
+    if (date.getDate() > day) {
+        return true;
+    }
+    return false;
 }
 
 const handleDeckRows = decks => {
